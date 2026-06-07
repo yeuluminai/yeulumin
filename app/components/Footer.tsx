@@ -23,9 +23,9 @@ export default function Footer() {
   };
 
   return (
-    <footer className="w-full border-t border-neutral-900 bg-[#0A0A0A] pt-16 pb-8">
+    <footer className="w-full border-t border-neutral-900 light:border-zinc-200 bg-[#0A0A0A] light:bg-[#FAFAFA] pt-16 pb-8 transition-colors duration-300">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 pb-12 border-b border-neutral-900">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 pb-12 border-b border-neutral-900 light:border-zinc-200">
           
           {/* Brand Col */}
           <div className="flex flex-col gap-4">
@@ -35,12 +35,9 @@ export default function Footer() {
                 alt="Yeulumin AI Icon"
                 className="h-7 w-7 object-contain"
               />
-              {/* <img
-                src="/logos/trimmed_yeulumin ai-02.png"
-                alt="Yeulumin AI Logo"
-                className="h-4 w-auto object-contain"
-              /> */}
-              <p className="text-sm font-bold tracking-wide text-white">Yeulumin AI</p>
+              <span className="text-sm font-semibold tracking-wide text-neutral-300 light:text-zinc-900">
+                YEULUMIN AI
+              </span>
             </Link>
             <p className="text-xs leading-relaxed text-neutral-500 max-w-xs">
               Futuristic streetwear calculated by artificial neural pathways. Weaving high-tech design concepts with raw, high-density apparel.
@@ -139,7 +136,7 @@ export default function Footer() {
 
           {/* Newsletter / Subscription */}
           <div className="flex flex-col gap-4">
-            <h3 className="text-xs font-semibold uppercase tracking-wider text-neutral-400 font-display mb-2">
+            <h3 className="text-xs font-semibold uppercase tracking-wider text-neutral-400 light:text-zinc-600 font-display mb-2">
               Neural Broadcasts
             </h3>
             <p className="text-xs text-neutral-500">
@@ -152,11 +149,11 @@ export default function Footer() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="system@domain.com"
-                className="w-full bg-[#111111] border border-neutral-900 rounded-lg py-2.5 pl-3 pr-10 text-xs text-neutral-300 placeholder-neutral-600 focus:outline-none focus:border-neon focus:ring-1 focus:ring-neon transition-all"
+                className="w-full bg-[#111111] light:bg-white border border-neutral-900 light:border-zinc-200 rounded-lg py-2.5 pl-3 pr-10 text-xs text-neutral-300 light:text-zinc-900 placeholder-neutral-600 light:placeholder-zinc-400 focus:outline-none focus:border-neon focus:ring-1 focus:ring-neon transition-all"
               />
               <button
                 type="submit"
-                className="absolute right-1 top-1 flex h-8 w-8 items-center justify-center rounded-md bg-neon/10 border border-neon/20 hover:bg-neon hover:text-[#0A0A0A] text-neon transition-all"
+                className="absolute right-1 top-1 flex h-8 w-8 items-center justify-center rounded-md bg-neon/10 border border-neon/20 hover:bg-neon hover:text-[#0A0A0A] text-neon transition-all cursor-pointer"
               >
                 <Send className="h-3.5 w-3.5" />
               </button>

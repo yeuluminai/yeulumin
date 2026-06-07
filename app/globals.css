@@ -1,8 +1,15 @@
 @import "tailwindcss";
 
+@custom-variant light (&:where(.light, .light *));
+
 :root {
   --background: #0a0a0a;
   --foreground: #f5f5f5;
+}
+
+.light {
+  --background: #fafafa;
+  --foreground: #0a0a0a;
 }
 
 @theme {
@@ -53,9 +60,15 @@ body {
 ::-webkit-scrollbar-track {
   background: #0a0a0a;
 }
+.light ::-webkit-scrollbar-track {
+  background: #fafafa;
+}
 ::-webkit-scrollbar-thumb {
   background: #222222;
   border-radius: 3px;
+}
+.light ::-webkit-scrollbar-thumb {
+  background: #e4e4e7;
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #00FFB2;

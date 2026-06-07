@@ -3,18 +3,33 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ShoppingBag, Sparkles, Menu, X } from "lucide-react";
+import { ShoppingBag, Sparkles, Menu, X, Sun, Moon } from "lucide-react";
 import { useCartStore, getCartTotalItems } from "../store/cartStore";
 
 export default function Navbar() {
   const pathname = usePathname();
   const [mounted, setMounted] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [theme, setTheme] = useState<"dark" | "light">("dark");
 
-  // Sync Zustand store safely on client side
+  // Sync state safely on client side
   useEffect(() => {
     setMounted(true);
+    const isLight = document.documentElement.classList.contains("light");
+    setTheme(isLight ? "light" : "dark");
   }, []);
+
+  const toggleTheme = () => {
+    if (theme === "dark") {
+      document.documentElement.classList.add("light");
+      localStorage.setItem("theme", "light");
+      setTheme("light");
+    } else {
+      document.documentElement.classList.remove("light");
+      localStorage.setItem("theme", "dark");
+      setTheme("dark");
+    }
+  };
 
   const items = useCartStore((state) => state.items);
   const cartItemCount = mounted ? getCartTotalItems(items) : 0;
@@ -26,7 +41,7 @@ export default function Navbar() {
   ];
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-neutral-900 bg-[#0A0A0A]/80 backdrop-blur-md">
+    <header className="sticky top-0 z-40 w-full border-b border-neutral-900 light:border-zinc-200 bg-[#0A0A0A]/80 light:bg-white/80 backdrop-blur-md transition-colors duration-300">
       <div className="mx-auto flex max-w-7xl h-20 items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Left: Brand Logo */}
         <Link href="/" className="group flex items-center gap-3">
@@ -35,12 +50,21 @@ export default function Navbar() {
             alt="Yeulumin AI Icon"
             className="h-8 w-8 object-contain transition-transform duration-300 group-hover:rotate-12"
           />
+          {/* Logo Wordmark (Dark Mode) */}
           {/* <img
             src="/logos/trimmed_yeulumin ai-02.png"
             alt="Yeulumin AI Logo"
-            className="h-4.5 w-auto object-contain brightness-100 group-hover:brightness-110 transition-all"
+            className="h-4.5 w-auto object-contain brightness-100 group-hover:brightness-110 transition-all light:hidden"
           /> */}
-          <p className="text-sm font-bold tracking-wide text-white group-hover:glow-text-neon transition-all">Yeulumin AI</p>
+          {/* Logo Wordmark (Light Mode) */}
+          {/* <img
+            src="/logos/trimmed_yeulumin ai-01.png"
+            alt="Yeulumin AI Logo"
+            className="h-4.5 w-auto object-contain transition-all hidden light:block"
+          /> */}
+          <p className="text-sm font-semibold tracking-wide text-neutral-400 light:text-zinc-500 group-hover:text-neon transition-colors">
+            YEULUMIN AI
+          </p>
         </Link>
 
         {/* Center: Desktop Navigation Links */}
@@ -52,7 +76,9 @@ export default function Navbar() {
                 key={link.href}
                 href={link.href}
                 className={`text-sm font-medium tracking-wide transition-colors duration-200 hover:text-neon ${
-                  isActive ? "text-neon font-semibold glow-text-neon" : "text-neutral-400"
+                  isActive
+                    ? "text-neon font-semibold glow-text-neon light:text-violet"
+                    : "text-neutral-400 light:text-zinc-500 hover:light:text-zinc-900"
                 }`}
               >
                 {link.name}
@@ -63,13 +89,26 @@ export default function Navbar() {
 
         {/* Right: Actions */}
         <div className="hidden md:flex items-center space-x-6">
+          {/* Theme Toggle Button */}
+          <button
+            onClick={toggleTheme}
+            className="flex items-center justify-center p-2 text-neutral-400 light:text-zinc-500 hover:text-neon light:hover:text-violet transition-colors rounded-lg focus:outline-none cursor-pointer"
+            aria-label="Toggle theme"
+          >
+            {mounted && theme === "light" ? (
+              <Moon className="h-5 w-5" />
+            ) : (
+              <Sun className="h-5 w-5" />
+            )}
+          </button>
+
           <Link
             href="/cart"
-            className="relative flex items-center justify-center p-2 text-neutral-400 hover:text-neon transition-colors"
+            className="relative flex items-center justify-center p-2 text-neutral-400 light:text-zinc-500 hover:text-neon light:hover:text-violet transition-colors"
           >
             <ShoppingBag className="h-5 w-5" />
             {cartItemCount > 0 && (
-              <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-violet text-[10px] font-bold text-white ring-2 ring-[#0A0A0A] animate-pulse">
+              <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-violet text-[10px] font-bold text-white ring-2 ring-[#0A0A0A] light:ring-white animate-pulse">
                 {cartItemCount}
               </span>
             )}
@@ -85,21 +124,34 @@ export default function Navbar() {
         </div>
 
         {/* Mobile Menu Buttons */}
-        <div className="flex items-center gap-4 md:hidden">
+        <div className="flex items-center gap-2 md:hidden">
+          {/* Mobile Theme Toggle Button */}
+          <button
+            onClick={toggleTheme}
+            className="flex items-center justify-center p-2 text-neutral-400 light:text-zinc-500 hover:text-neon light:hover:text-violet transition-colors rounded-lg focus:outline-none cursor-pointer"
+            aria-label="Toggle theme"
+          >
+            {mounted && theme === "light" ? (
+              <Moon className="h-5 w-5" />
+            ) : (
+              <Sun className="h-5 w-5" />
+            )}
+          </button>
+
           <Link
             href="/cart"
-            className="relative flex items-center justify-center p-2 text-neutral-400 hover:text-neon transition-colors"
+            className="relative flex items-center justify-center p-2 text-neutral-400 light:text-zinc-500 hover:text-neon light:hover:text-violet transition-colors"
           >
             <ShoppingBag className="h-5 w-5" />
             {cartItemCount > 0 && (
-              <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-violet text-[10px] font-bold text-white ring-2 ring-[#0A0A0A]">
+              <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-violet text-[10px] font-bold text-white ring-2 ring-[#0A0A0A] light:ring-white">
                 {cartItemCount}
               </span>
             )}
           </Link>
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="text-neutral-400 hover:text-neon p-2 transition-colors focus:outline-none"
+            className="text-neutral-400 light:text-zinc-500 hover:text-neon light:hover:text-violet p-2 transition-colors focus:outline-none"
           >
             {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </button>
@@ -108,7 +160,7 @@ export default function Navbar() {
 
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-t border-neutral-900 bg-[#0A0A0A] py-6 px-4 space-y-4 animate-fade-in">
+        <div className="md:hidden border-t border-neutral-900 light:border-zinc-200 bg-[#0A0A0A] light:bg-white py-6 px-4 space-y-4 animate-fade-in">
           <nav className="flex flex-col space-y-4">
             {navLinks.map((link) => (
               <Link
@@ -116,14 +168,16 @@ export default function Navbar() {
                 href={link.href}
                 onClick={() => setMobileMenuOpen(false)}
                 className={`text-base font-medium tracking-wide transition-colors ${
-                  pathname === link.href ? "text-neon font-semibold" : "text-neutral-400"
+                  pathname === link.href
+                    ? "text-neon light:text-violet font-semibold"
+                    : "text-neutral-400 light:text-zinc-500"
                 }`}
               >
                 {link.name}
               </Link>
             ))}
           </nav>
-          <div className="pt-4 border-t border-neutral-900">
+          <div className="pt-4 border-t border-neutral-900 light:border-zinc-200">
             <Link
               href="/customize"
               onClick={() => setMobileMenuOpen(false)}

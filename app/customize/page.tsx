@@ -114,7 +114,7 @@ function CustomizeStudio() {
   return (
     <main className="flex-grow mx-auto max-w-7xl w-full px-4 sm:px-6 lg:px-8 py-8 md:py-12">
       {notification && (
-        <div className="fixed top-24 left-1/2 -translate-x-1/2 z-50 bg-[#0A0A0A] border border-neon text-neon text-xs px-6 py-3 rounded-lg shadow-[0_0_15px_rgba(0,255,178,0.2)] font-mono animate-bounce">
+        <div className="fixed top-24 left-1/2 -translate-x-1/2 z-50 bg-[#0A0A0A] light:bg-white border border-neon light:border-violet text-neon light:text-violet text-xs px-6 py-3 rounded-lg shadow-[0_0_15px_rgba(0,255,178,0.2)] light:shadow-[0_0_15px_rgba(123,47,255,0.15)] font-mono animate-bounce">
           {notification}
         </div>
       )}
@@ -123,12 +123,12 @@ function CustomizeStudio() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 items-start">
         
         {/* LEFT PANEL - PROMPT STUDIO (7 columns) */}
-        <div className="lg:col-span-6 flex flex-col gap-6 md:gap-8 bg-[#111111]/20 border border-neutral-900 rounded-2xl p-6 sm:p-8 backdrop-blur-md">
+        <div className="lg:col-span-6 flex flex-col gap-6 md:gap-8 bg-[#111111]/20 light:bg-white border border-neutral-900 light:border-zinc-200 rounded-2xl p-6 sm:p-8 backdrop-blur-md transition-colors duration-300">
           <div className="flex flex-col gap-1.5">
-            <span className="text-[10px] font-mono text-neon uppercase tracking-widest flex items-center gap-1.5">
+            <span className="text-[10px] font-mono text-neon light:text-violet uppercase tracking-widest flex items-center gap-1.5">
               <Sparkles className="h-3 w-3" /> Custom Studio
             </span>
-            <h1 className="font-display text-2xl sm:text-3xl font-black uppercase tracking-tight text-white">
+            <h1 className="font-display text-2xl sm:text-3xl font-black uppercase tracking-tight text-white light:text-zinc-900">
               DESIGN WITH AI
             </h1>
             <div className="h-[2px] w-12 bg-neon mt-1" />
@@ -138,7 +138,7 @@ function CustomizeStudio() {
             
             {/* Prompt input */}
             <div className="flex flex-col gap-2">
-              <label className="text-xs font-semibold uppercase tracking-wider text-neutral-400 font-mono">
+              <label className="text-xs font-semibold uppercase tracking-wider text-neutral-400 light:text-zinc-555 font-mono">
                 Describe Your Design Prompt
               </label>
               <textarea
@@ -147,13 +147,13 @@ function CustomizeStudio() {
                 placeholder="A chrome dragon wrapped around computer cables, glowing cybermint and purple hues, techwear layout..."
                 required
                 rows={4}
-                className="w-full bg-[#111111] border border-neutral-800 focus:border-neon focus:ring-1 focus:ring-neon rounded-xl p-4 text-xs text-neutral-300 placeholder-neutral-600 focus:outline-none transition-all leading-relaxed"
+                className="w-full bg-[#111111] light:bg-zinc-50 border border-neutral-800 light:border-zinc-200 focus:border-neon light:focus:border-violet focus:ring-1 focus:ring-neon light:focus:ring-violet rounded-xl p-4 text-xs text-neutral-300 light:text-zinc-900 placeholder-neutral-600 light:placeholder-zinc-400 focus:outline-none transition-all leading-relaxed"
               />
             </div>
 
             {/* Style Selector */}
             <div className="flex flex-col gap-3">
-              <label className="text-xs font-semibold uppercase tracking-wider text-neutral-400 font-mono">
+              <label className="text-xs font-semibold uppercase tracking-wider text-neutral-400 light:text-zinc-555 font-mono">
                 Aesthetic Matrix style
               </label>
               <div className="grid grid-cols-3 gap-2">
@@ -166,8 +166,8 @@ function CustomizeStudio() {
                       onClick={() => setSelectedStyle(style.name)}
                       className={`py-2 px-1 text-center text-[10px] font-bold uppercase tracking-wider rounded-lg border transition-all cursor-pointer ${
                         isActive
-                          ? "bg-neon border-neon text-[#0A0A0A] glow-neon"
-                          : "bg-neutral-950/40 border-neutral-900 text-neutral-500 hover:border-neutral-800 hover:text-neutral-300"
+                          ? "bg-neon border-neon text-[#0A0A0A] light:bg-violet light:border-violet light:text-white glow-neon light:glow-violet"
+                          : "bg-neutral-950/40 light:bg-zinc-100 border-neutral-900 light:border-zinc-200 text-neutral-500 light:text-zinc-550 hover:border-neutral-800 light:hover:border-zinc-300 hover:text-neutral-300 light:hover:text-zinc-800"
                       }`}
                     >
                       {style.name}
@@ -179,7 +179,7 @@ function CustomizeStudio() {
 
             {/* Color Palette Picker */}
             <div className="flex flex-col gap-3">
-              <label className="text-xs font-semibold uppercase tracking-wider text-neutral-400 font-mono">
+              <label className="text-xs font-semibold uppercase tracking-wider text-neutral-400 light:text-zinc-555 font-mono">
                 T-Shirt Fabric Color
               </label>
               <div className="flex flex-wrap items-center gap-3">
@@ -219,7 +219,7 @@ function CustomizeStudio() {
               
               {/* Size Select */}
               <div className="flex flex-col gap-3">
-                <label className="text-xs font-semibold uppercase tracking-wider text-neutral-400 font-mono">
+                <label className="text-xs font-semibold uppercase tracking-wider text-neutral-400 light:text-zinc-555 font-mono">
                   Sizing Matrix
                 </label>
                 <div className="flex items-center gap-1.5">
@@ -232,8 +232,8 @@ function CustomizeStudio() {
                         onClick={() => setSelectedSize(size)}
                         className={`h-8 w-8 text-[10px] font-bold rounded border flex items-center justify-center transition-all cursor-pointer ${
                           isActive
-                            ? "bg-neon border-neon text-[#0A0A0A] glow-neon font-black"
-                            : "bg-neutral-950/40 border-neutral-900 text-neutral-500 hover:border-neutral-800 hover:text-neutral-300"
+                            ? "bg-neon border-neon text-[#0A0A0A] light:bg-violet light:border-violet light:text-white glow-neon light:glow-violet font-black"
+                            : "bg-neutral-950/40 light:bg-zinc-100 border-neutral-900 light:border-zinc-200 text-neutral-500 light:text-zinc-500 hover:border-neutral-800 light:hover:border-zinc-300 hover:text-neutral-300 light:hover:text-zinc-800"
                         }`}
                       >
                         {size}
@@ -245,25 +245,25 @@ function CustomizeStudio() {
 
               {/* Quantity Stepper */}
               <div className="flex flex-col gap-3">
-                <label className="text-xs font-semibold uppercase tracking-wider text-neutral-400 font-mono">
+                <label className="text-xs font-semibold uppercase tracking-wider text-neutral-400 light:text-zinc-555 font-mono">
                   Quantity Units
                 </label>
                 <div className="flex items-center gap-3">
-                  <div className="flex items-center bg-neutral-950/50 border border-neutral-900 rounded-lg">
+                  <div className="flex items-center bg-neutral-950/50 light:bg-zinc-100 border border-neutral-900 light:border-zinc-200 rounded-lg">
                     <button
                       type="button"
                       onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                      className="p-2 text-neutral-500 hover:text-neon transition-colors cursor-pointer"
+                      className="p-2 text-neutral-500 hover:text-neon light:hover:text-violet transition-colors cursor-pointer"
                     >
                       <Minus className="h-3.5 w-3.5" />
                     </button>
-                    <span className="w-12 text-center text-xs font-mono font-bold text-neutral-200">
+                    <span className="w-12 text-center text-xs font-mono font-bold text-neutral-200 light:text-zinc-800">
                       {quantity}
                     </span>
                     <button
                       type="button"
                       onClick={() => setQuantity(quantity + 1)}
-                      className="p-2 text-neutral-500 hover:text-neon transition-colors cursor-pointer"
+                      className="p-2 text-neutral-500 hover:text-neon light:hover:text-violet transition-colors cursor-pointer"
                     >
                       <Plus className="h-3.5 w-3.5" />
                     </button>
@@ -290,7 +290,7 @@ function CustomizeStudio() {
           </form>
 
           {/* Generated Result Preview Block */}
-          <div className="border border-neutral-900 bg-[#0A0A0A]/40 rounded-xl p-4 flex flex-col sm:flex-row gap-4 items-center">
+          <div className="border border-neutral-900 light:border-zinc-200 bg-[#0A0A0A]/40 light:bg-zinc-50 rounded-xl p-4 flex flex-col sm:flex-row gap-4 items-center transition-colors">
             <div className="h-24 w-24 rounded-lg bg-neutral-950 border border-neutral-950 overflow-hidden flex-shrink-0 relative">
               {generatedImage ? (
                 <img
@@ -299,19 +299,19 @@ function CustomizeStudio() {
                   className="h-full w-full object-cover"
                 />
               ) : (
-                <div className="h-full w-full flex items-center justify-center bg-neutral-950 border border-neutral-900">
+                <div className="h-full w-full flex items-center justify-center bg-neutral-950 border border-neutral-900 light:border-zinc-200">
                   <span className="text-[10px] font-mono text-neutral-700">VOID</span>
                 </div>
               )}
             </div>
             <div className="flex flex-col gap-1 text-center sm:text-left">
-              <span className="text-[10px] font-mono text-neutral-500">
+              <span className="text-[10px] font-mono text-neutral-500 light:text-zinc-500">
                 ACTIVE TEXTURE MAP
               </span>
-              <h4 className="text-xs font-bold text-neutral-200">
+              <h4 className="text-xs font-bold text-neutral-200 light:text-zinc-800">
                 {isGenerating ? "Synthesizing vector coordinates..." : `${selectedStyle} Style Overlay`}
               </h4>
-              <p className="text-[10px] text-neutral-600 leading-relaxed max-w-xs">
+              <p className="text-[10px] text-neutral-600 light:text-zinc-500 leading-relaxed max-w-xs">
                 {isGenerating 
                   ? "Resolving style weights against custom prompt prompts." 
                   : "Texture compiles automatically onto the active 3D mannequin showroom model."}
@@ -341,8 +341,8 @@ function CustomizeStudio() {
                 onClick={() => setView("front")}
                 className={`flex-grow py-2.5 text-xs font-semibold rounded-lg border uppercase tracking-wider transition-colors cursor-pointer ${
                   view === "front"
-                    ? "bg-[#111111] border-neon text-neon glow-text-neon font-black"
-                    : "bg-[#111111]/45 border-neutral-900 text-neutral-500 hover:text-neutral-300"
+                    ? "bg-[#111111] light:bg-zinc-100 border-neon light:border-violet text-neon light:text-violet glow-text-neon font-black"
+                    : "bg-[#111111]/45 light:bg-white border-neutral-900 light:border-zinc-200 text-neutral-500 light:text-zinc-550 hover:text-neutral-300 light:hover:text-zinc-900"
                 }`}
               >
                 Front Showroom
@@ -352,8 +352,8 @@ function CustomizeStudio() {
                 onClick={() => setView("back")}
                 className={`flex-grow py-2.5 text-xs font-semibold rounded-lg border uppercase tracking-wider transition-colors cursor-pointer ${
                   view === "back"
-                    ? "bg-[#111111] border-neon text-neon glow-text-neon font-black"
-                    : "bg-[#111111]/45 border-neutral-900 text-neutral-500 hover:text-neutral-300"
+                    ? "bg-[#111111] light:bg-zinc-100 border-neon light:border-violet text-neon light:text-violet glow-text-neon font-black"
+                    : "bg-[#111111]/45 light:bg-white border-neutral-900 light:border-zinc-200 text-neutral-500 light:text-zinc-550 hover:text-neutral-300 light:hover:text-zinc-900"
                 }`}
               >
                 Back Showroom
@@ -361,9 +361,9 @@ function CustomizeStudio() {
             </div>
 
             {/* Quality Seals */}
-            <div className="grid grid-cols-2 gap-4 border-y border-neutral-900 py-4 font-mono text-[10px] text-neutral-500">
+            <div className="grid grid-cols-2 gap-4 border-y border-neutral-900 light:border-zinc-200 py-4 font-mono text-[10px] text-neutral-500">
               <div className="flex items-center gap-2">
-                <ShieldCheck className="h-4 w-4 text-neon" />
+                <ShieldCheck className="h-4 w-4 text-neon light:text-violet" />
                 <span>Heavyweight 280GSM Cotton</span>
               </div>
               <div className="flex items-center gap-2">
@@ -409,7 +409,7 @@ function CustomizeLoading() {
 
 export default function CustomizePage() {
   return (
-    <div className="relative min-h-screen flex flex-col bg-[#0A0A0A] text-[#f5f5f5]">
+    <div className="relative min-h-screen flex flex-col bg-[#0A0A0A] light:bg-[#FAFAFA] text-[#f5f5f5] light:text-[#0A0A0A] transition-colors duration-300">
       <GrainOverlay />
       <Navbar />
       <Suspense fallback={<CustomizeLoading />}>

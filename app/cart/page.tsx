@@ -39,7 +39,7 @@ export default function CartPage() {
   const amountLeftForFreeShipping = Math.max(shippingThreshold - subtotal, 0);
 
   return (
-    <div className="relative min-h-screen flex flex-col bg-[#0A0A0A] text-[#f5f5f5]">
+    <div className="relative min-h-screen flex flex-col bg-[#0A0A0A] light:bg-[#FAFAFA] text-[#f5f5f5] light:text-[#0A0A0A] transition-colors duration-300">
       <GrainOverlay />
       <Navbar />
 
@@ -50,7 +50,7 @@ export default function CartPage() {
             <ShoppingBag className="h-3.5 w-3.5" />
             <span>Order Manifest</span>
           </div>
-          <h1 className="font-display text-4xl sm:text-5xl font-black tracking-tight uppercase text-white">
+          <h1 className="font-display text-4xl sm:text-5xl font-black tracking-tight uppercase text-white light:text-zinc-900">
             YOUR CART
           </h1>
           <div className="h-[2px] w-16 bg-neon mt-2" />
@@ -64,12 +64,12 @@ export default function CartPage() {
               {cartItems.map((item) => (
                 <div
                   key={item.id}
-                  className="bg-[#111111]/30 border border-neutral-900 rounded-xl p-4 sm:p-6 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-6 hover:border-neutral-800 transition-colors"
+                  className="bg-[#111111]/30 light:bg-white border border-neutral-900 light:border-zinc-200 rounded-xl p-4 sm:p-6 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-6 hover:border-neutral-800 light:hover:border-zinc-300 transition-colors"
                 >
                   {/* Left Column: Image & Details */}
                   <div className="flex items-center gap-4">
                     {/* Item Image */}
-                    <div className="h-20 w-20 sm:h-24 sm:w-24 rounded-lg bg-neutral-950 border border-neutral-900 overflow-hidden flex-shrink-0 relative">
+                    <div className="h-20 w-20 sm:h-24 sm:w-24 rounded-lg bg-neutral-950 light:bg-zinc-50 border border-neutral-900 light:border-zinc-200 overflow-hidden flex-shrink-0 relative">
                       <img
                         src={item.image}
                         alt={item.name}
@@ -79,20 +79,20 @@ export default function CartPage() {
 
                     {/* Item Specs */}
                     <div className="flex flex-col gap-1.5">
-                      <h3 className="font-bold text-neutral-200 text-sm sm:text-base">
+                      <h3 className="font-bold text-neutral-200 light:text-zinc-800 text-sm sm:text-base">
                         {item.name}
                       </h3>
                       
-                      <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] text-neutral-500 font-mono">
+                      <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] text-neutral-500 light:text-zinc-500 font-mono">
                         <span className="flex items-center gap-1.5">
-                          Size: <strong className="text-neutral-300">{item.size}</strong>
+                          Size: <strong className="text-neutral-300 light:text-zinc-800">{item.size}</strong>
                         </span>
                         
                         {/* Base Color preview */}
                         <span className="flex items-center gap-1.5">
                           Base: 
                           <span
-                            className="h-3 w-3 rounded-full border border-neutral-800 inline-block"
+                            className="h-3 w-3 rounded-full border border-neutral-800 light:border-zinc-300 inline-block"
                             style={{ backgroundColor: item.color }}
                             title={item.color}
                           />
@@ -107,7 +107,7 @@ export default function CartPage() {
 
                       {/* Display custom prompt if present */}
                       {item.prompt && (
-                        <p className="text-[10px] text-neutral-500 font-mono italic max-w-xs sm:max-w-md line-clamp-1 border-l border-neutral-800 pl-2 mt-1 leading-relaxed">
+                        <p className="text-[10px] text-neutral-500 light:text-zinc-500 font-mono italic max-w-xs sm:max-w-md line-clamp-1 border-l border-neutral-800 light:border-zinc-200 pl-2 mt-1 leading-relaxed">
                           "{item.prompt}"
                         </p>
                       )}
@@ -115,10 +115,10 @@ export default function CartPage() {
                   </div>
 
                   {/* Right Column: Quantity and Actions */}
-                  <div className="flex sm:flex-col items-center sm:items-end justify-between sm:justify-center gap-4 border-t sm:border-t-0 pt-4 sm:pt-0 border-neutral-900/60">
+                  <div className="flex sm:flex-col items-center sm:items-end justify-between sm:justify-center gap-4 border-t sm:border-t-0 pt-4 sm:pt-0 border-neutral-900/60 light:border-zinc-200">
                     
                     {/* Price in INR */}
-                    <div className="font-mono text-neon font-bold text-sm sm:text-base sm:mb-1.5">
+                    <div className="font-mono text-neon light:text-violet font-bold text-sm sm:text-base sm:mb-1.5">
                       ₹{item.price * item.quantity}
                     </div>
 
@@ -126,21 +126,21 @@ export default function CartPage() {
                     <div className="flex items-center gap-3">
                       
                       {/* Quantity Stepper */}
-                      <div className="flex items-center bg-neutral-950/40 border border-neutral-900 rounded-lg">
+                      <div className="flex items-center bg-neutral-950/40 light:bg-zinc-100 border border-neutral-900 light:border-zinc-200 rounded-lg">
                         <button
                           type="button"
                           onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                          className="p-1.5 text-neutral-500 hover:text-neon transition-colors cursor-pointer"
+                          className="p-1.5 text-neutral-500 hover:text-neon light:hover:text-violet transition-colors cursor-pointer"
                         >
                           <Minus className="h-3 w-3" />
                         </button>
-                        <span className="w-8 text-center text-xs font-mono font-bold text-neutral-200">
+                        <span className="w-8 text-center text-xs font-mono font-bold text-neutral-200 light:text-zinc-800">
                           {item.quantity}
                         </span>
                         <button
                           type="button"
                           onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                          className="p-1.5 text-neutral-500 hover:text-neon transition-colors cursor-pointer"
+                          className="p-1.5 text-neutral-500 hover:text-neon light:hover:text-violet transition-colors cursor-pointer"
                         >
                           <Plus className="h-3 w-3" />
                         </button>
@@ -149,7 +149,7 @@ export default function CartPage() {
                       {/* Delete Action */}
                       <button
                         onClick={() => removeItem(item.id)}
-                        className="p-2 rounded-lg bg-neutral-950/40 border border-neutral-900 text-neutral-500 hover:text-red-500 hover:border-red-950 transition-colors cursor-pointer"
+                        className="p-2 rounded-lg bg-neutral-950/40 light:bg-zinc-100 border border-neutral-900 light:border-zinc-200 text-neutral-500 light:text-zinc-500 hover:text-red-500 light:hover:text-red-650 hover:border-red-950 light:hover:border-red-200 transition-colors cursor-pointer"
                         title="Remove unit"
                       >
                         <Trash2 className="h-4 w-4" />
@@ -166,13 +166,13 @@ export default function CartPage() {
             <div className="lg:col-span-4 flex flex-col gap-6 sticky top-28">
               
               {/* Promo Banner / Free Shipping Tracker */}
-              <div className="bg-[#111111]/30 border border-neutral-900 rounded-xl p-6 flex flex-col gap-3">
+              <div className="bg-[#111111]/30 light:bg-white border border-neutral-900 light:border-zinc-200 rounded-xl p-6 flex flex-col gap-3">
                 <div className="flex items-center justify-between text-xs font-mono">
-                  <span className="text-neutral-400">Free Shipping Tracker</span>
-                  <span className="text-neon">{amountLeftForFreeShipping > 0 ? `₹${amountLeftForFreeShipping} remaining` : "Eligible"}</span>
+                  <span className="text-neutral-400 light:text-zinc-500">Free Shipping Tracker</span>
+                  <span className="text-neon light:text-violet">{amountLeftForFreeShipping > 0 ? `₹${amountLeftForFreeShipping} remaining` : "Eligible"}</span>
                 </div>
                 {/* Progress bar */}
-                <div className="w-full h-1.5 bg-neutral-900 rounded-full overflow-hidden">
+                <div className="w-full h-1.5 bg-neutral-900 light:bg-zinc-100 rounded-full overflow-hidden">
                   <div
                     className="h-full bg-gradient-to-r from-violet to-neon transition-all duration-500"
                     style={{ width: `${progressToFreeShipping}%` }}
@@ -186,33 +186,33 @@ export default function CartPage() {
               </div>
 
               {/* Order Summary Receipt */}
-              <div className="bg-[#111111]/30 border border-neutral-900 rounded-xl p-6 flex flex-col gap-4">
-                <h3 className="font-display font-semibold uppercase tracking-wider text-neutral-400 text-xs pb-3 border-b border-neutral-900">
+              <div className="bg-[#111111]/30 light:bg-white border border-neutral-900 light:border-zinc-200 rounded-xl p-6 flex flex-col gap-4">
+                <h3 className="font-display font-semibold uppercase tracking-wider text-neutral-400 light:text-zinc-500 text-xs pb-3 border-b border-neutral-900 light:border-zinc-250">
                   Summary Matrix
                 </h3>
 
-                <div className="flex flex-col gap-3 font-mono text-xs text-neutral-400">
+                <div className="flex flex-col gap-3 font-mono text-xs text-neutral-400 light:text-zinc-500">
                   <div className="flex justify-between">
                     <span>Items Count</span>
-                    <span className="text-neutral-200">{totalItems} units</span>
+                    <span className="text-neutral-200 light:text-zinc-800">{totalItems} units</span>
                   </div>
                   <div className="flex justify-between">
                     <span>Subtotal</span>
-                    <span className="text-neutral-200">₹{subtotal}</span>
+                    <span className="text-neutral-200 light:text-zinc-800">₹{subtotal}</span>
                   </div>
                   <div className="flex justify-between">
                     <span>Shipping Freight</span>
-                    <span className="text-neutral-200">
-                      {shipping === 0 ? <span className="text-neon font-bold uppercase text-[10px]">Free</span> : `₹${shipping}`}
+                    <span className="text-neutral-200 light:text-zinc-800">
+                      {shipping === 0 ? <span className="text-neon light:text-violet font-bold uppercase text-[10px]">Free</span> : `₹${shipping}`}
                     </span>
                   </div>
                 </div>
 
-                <div className="h-[1px] bg-neutral-900 my-1" />
+                <div className="h-[1px] bg-neutral-900 light:bg-zinc-200 my-1" />
 
                 <div className="flex justify-between items-baseline">
-                  <span className="text-xs uppercase font-mono font-bold text-neutral-400">Total Protocol</span>
-                  <span className="font-mono text-neon glow-text-neon text-xl font-bold">₹{total}</span>
+                  <span className="text-xs uppercase font-mono font-bold text-neutral-400 light:text-zinc-500">Total Protocol</span>
+                  <span className="font-mono text-neon light:text-violet glow-text-neon light:glow-text-none text-xl font-bold">₹{total}</span>
                 </div>
 
                 <Link
@@ -241,17 +241,17 @@ export default function CartPage() {
           </div>
         ) : (
           /* Empty State */
-          <div className="border border-dashed border-neutral-900 rounded-xl py-24 text-center max-w-md mx-auto mt-12 flex flex-col items-center gap-6">
-            <div className="relative p-4 rounded-full bg-neutral-950 border border-neutral-900">
-              <ShoppingBag className="h-8 w-8 text-neutral-700" />
+          <div className="border border-dashed border-neutral-900 light:border-zinc-250 rounded-xl py-24 text-center max-w-md mx-auto mt-12 flex flex-col items-center gap-6">
+            <div className="relative p-4 rounded-full bg-neutral-950 light:bg-zinc-100 border border-neutral-900 light:border-zinc-200">
+              <ShoppingBag className="h-8 w-8 text-neutral-700 light:text-zinc-400" />
               <span className="absolute top-0 right-0 h-3 w-3 rounded-full bg-violet animate-ping" />
             </div>
             
             <div className="flex flex-col gap-2 max-w-xs">
-              <h3 className="text-base font-bold text-neutral-400 uppercase tracking-widest font-display">
+              <h3 className="text-base font-bold text-neutral-400 light:text-zinc-800 uppercase tracking-widest font-display">
                 Cart Module Empty
               </h3>
-              <p className="text-xs text-neutral-600 leading-relaxed">
+              <p className="text-xs text-neutral-600 light:text-zinc-500 leading-relaxed">
                 Your order manifest is empty. Synthesize custom streetwear designs inside the AI design customizer lab.
               </p>
             </div>

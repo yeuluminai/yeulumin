@@ -185,7 +185,7 @@ export default function CheckoutPage() {
   };
 
   return (
-    <div className="relative min-h-screen flex flex-col bg-[#0A0A0A] text-[#f5f5f5]">
+    <div className="relative min-h-screen flex flex-col bg-[#0A0A0A] light:bg-[#FAFAFA] text-[#f5f5f5] light:text-[#0A0A0A] transition-colors duration-300">
       <GrainOverlay />
       <Navbar />
 
@@ -194,7 +194,7 @@ export default function CheckoutPage() {
       <main className="flex-grow mx-auto max-w-4xl w-full px-4 sm:px-6 lg:px-8 py-12">
         {/* Step Indicator */}
         <div className="flex items-center justify-between max-w-md mx-auto mb-12 relative">
-          <div className="absolute left-0 right-0 top-1/2 -translate-y-1/2 h-[2px] bg-neutral-900 z-0" />
+          <div className="absolute left-0 right-0 top-1/2 -translate-y-1/2 h-[2px] bg-neutral-900 light:bg-zinc-200 z-0" />
           
           {[
             { num: 1, label: "Shipping" },
@@ -210,15 +210,15 @@ export default function CheckoutPage() {
                     isCompleted
                       ? "bg-neon border-neon text-[#0A0A0A] glow-neon"
                       : isActive
-                      ? "bg-[#111111] border-neon text-neon glow-text-neon"
-                      : "bg-[#0A0A0A] border-neutral-800 text-neutral-600"
+                      ? "bg-[#111111] light:bg-white border-neon light:border-violet text-neon light:text-violet glow-text-neon light:glow-text-none"
+                      : "bg-[#0A0A0A] light:bg-white border-neutral-800 light:border-zinc-200 text-neutral-600 light:text-zinc-400"
                   }`}
                 >
                   {s.num}
                 </span>
                 <span
                   className={`text-[10px] uppercase font-mono tracking-wider ${
-                    isActive ? "text-neon glow-text-neon font-bold" : "text-neutral-500"
+                    isActive ? "text-neon light:text-violet glow-text-neon light:glow-text-none font-bold" : "text-neutral-500 light:text-zinc-500"
                   }`}
                 >
                   {s.label}
@@ -231,109 +231,109 @@ export default function CheckoutPage() {
         {/* STEP 1: SHIPPING DETAILS */}
         {step === 1 && (
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-            <div className="lg:col-span-8 bg-[#111111]/30 border border-neutral-900 rounded-xl p-6 sm:p-8">
-              <h2 className="text-sm font-bold uppercase tracking-wider text-neutral-400 font-mono mb-6 pb-3 border-b border-neutral-900 flex items-center gap-2">
-                <Truck className="h-4 w-4 text-neon" />
+            <div className="lg:col-span-8 bg-[#111111]/30 light:bg-white border border-neutral-900 light:border-zinc-200 rounded-xl p-6 sm:p-8">
+              <h2 className="text-sm font-bold uppercase tracking-wider text-neutral-400 light:text-zinc-650 font-mono mb-6 pb-3 border-b border-neutral-900 light:border-zinc-200 flex items-center gap-2">
+                <Truck className="h-4 w-4 text-neon light:text-violet" />
                 <span>Shipping Destination Matrix</span>
               </h2>
 
               <form onSubmit={handleShippingSubmit} className="grid grid-cols-1 sm:grid-cols-2 gap-5 text-xs">
                 <div className="flex flex-col gap-1.5 sm:col-span-2">
-                  <label className="font-mono text-neutral-500 uppercase">Full Name</label>
+                  <label className="font-mono text-neutral-500 light:text-zinc-500 uppercase">Full Name</label>
                   <input
                     type="text"
                     required
                     value={shippingForm.fullName}
                     onChange={(e) => setShippingForm({ ...shippingForm, fullName: e.target.value })}
                     placeholder="Jax Vandal"
-                    className="bg-[#111111] border border-neutral-800 focus:border-neon rounded px-3 py-2 text-neutral-300 placeholder-neutral-700 focus:outline-none transition-colors"
+                    className="bg-[#111111] light:bg-zinc-50 border border-neutral-800 light:border-zinc-200 focus:border-neon light:focus:border-violet rounded px-3 py-2 text-neutral-300 light:text-zinc-900 placeholder-neutral-700 light:placeholder-zinc-400 focus:outline-none transition-colors"
                   />
                 </div>
                 <div className="flex flex-col gap-1.5">
-                  <label className="font-mono text-neutral-500 uppercase">Email Address</label>
+                  <label className="font-mono text-neutral-500 light:text-zinc-500 uppercase">Email Address</label>
                   <input
                     type="email"
                     required
                     value={shippingForm.email}
                     onChange={(e) => setShippingForm({ ...shippingForm, email: e.target.value })}
                     placeholder="vandal@hypegrid.com"
-                    className="bg-[#111111] border border-neutral-800 focus:border-neon rounded px-3 py-2 text-neutral-300 placeholder-neutral-700 focus:outline-none transition-colors"
+                    className="bg-[#111111] light:bg-zinc-50 border border-neutral-800 light:border-zinc-200 focus:border-neon light:focus:border-violet rounded px-3 py-2 text-neutral-300 light:text-zinc-900 placeholder-neutral-700 light:placeholder-zinc-400 focus:outline-none transition-colors"
                   />
                 </div>
                 <div className="flex flex-col gap-1.5">
-                  <label className="font-mono text-neutral-500 uppercase">Phone Code</label>
+                  <label className="font-mono text-neutral-500 light:text-zinc-500 uppercase">Phone Code</label>
                   <input
                     type="tel"
                     required
                     value={shippingForm.phone}
                     onChange={(e) => setShippingForm({ ...shippingForm, phone: e.target.value })}
                     placeholder="+91 98765 43210"
-                    className="bg-[#111111] border border-neutral-800 focus:border-neon rounded px-3 py-2 text-neutral-300 placeholder-neutral-700 focus:outline-none transition-colors"
+                    className="bg-[#111111] light:bg-zinc-50 border border-neutral-800 light:border-zinc-200 focus:border-neon light:focus:border-violet rounded px-3 py-2 text-neutral-300 light:text-zinc-900 placeholder-neutral-700 light:placeholder-zinc-400 focus:outline-none transition-colors"
                   />
                 </div>
                 <div className="flex flex-col gap-1.5 sm:col-span-2">
-                  <label className="font-mono text-neutral-500 uppercase">Address Line 1</label>
+                  <label className="font-mono text-neutral-500 light:text-zinc-500 uppercase">Address Line 1</label>
                   <input
                     type="text"
                     required
                     value={shippingForm.address1}
                     onChange={(e) => setShippingForm({ ...shippingForm, address1: e.target.value })}
                     placeholder="Plot 42, Cyberpunk Boulevard, Layer 3"
-                    className="bg-[#111111] border border-neutral-800 focus:border-neon rounded px-3 py-2 text-neutral-300 placeholder-neutral-700 focus:outline-none transition-colors"
+                    className="bg-[#111111] light:bg-zinc-50 border border-neutral-800 light:border-zinc-200 focus:border-neon light:focus:border-violet rounded px-3 py-2 text-neutral-300 light:text-zinc-900 placeholder-neutral-700 light:placeholder-zinc-400 focus:outline-none transition-colors"
                   />
                 </div>
                 <div className="flex flex-col gap-1.5 sm:col-span-2">
-                  <label className="font-mono text-neutral-500 uppercase">Address Line 2 (Optional)</label>
+                  <label className="font-mono text-neutral-500 light:text-zinc-500 uppercase">Address Line 2 (Optional)</label>
                   <input
                     type="text"
                     value={shippingForm.address2}
                     onChange={(e) => setShippingForm({ ...shippingForm, address2: e.target.value })}
                     placeholder="Block Neon, Sector 9"
-                    className="bg-[#111111] border border-neutral-800 focus:border-neon rounded px-3 py-2 text-neutral-300 placeholder-neutral-700 focus:outline-none transition-colors"
+                    className="bg-[#111111] light:bg-zinc-50 border border-neutral-800 light:border-zinc-200 focus:border-neon light:focus:border-violet rounded px-3 py-2 text-neutral-300 light:text-zinc-900 placeholder-neutral-700 light:placeholder-zinc-400 focus:outline-none transition-colors"
                   />
                 </div>
                 <div className="flex flex-col gap-1.5">
-                  <label className="font-mono text-neutral-500 uppercase">City</label>
+                  <label className="font-mono text-neutral-500 light:text-zinc-500 uppercase">City</label>
                   <input
                     type="text"
                     required
                     value={shippingForm.city}
                     onChange={(e) => setShippingForm({ ...shippingForm, city: e.target.value })}
                     placeholder="Bangalore"
-                    className="bg-[#111111] border border-neutral-800 focus:border-neon rounded px-3 py-2 text-neutral-300 placeholder-neutral-700 focus:outline-none transition-colors"
+                    className="bg-[#111111] light:bg-zinc-50 border border-neutral-800 light:border-zinc-200 focus:border-neon light:focus:border-violet rounded px-3 py-2 text-neutral-300 light:text-zinc-900 placeholder-neutral-700 light:placeholder-zinc-400 focus:outline-none transition-colors"
                   />
                 </div>
                 <div className="flex flex-col gap-1.5">
-                  <label className="font-mono text-neutral-500 uppercase">State</label>
+                  <label className="font-mono text-neutral-500 light:text-zinc-500 uppercase">State</label>
                   <input
                     type="text"
                     required
                     value={shippingForm.state}
                     onChange={(e) => setShippingForm({ ...shippingForm, state: e.target.value })}
                     placeholder="Karnataka"
-                    className="bg-[#111111] border border-neutral-800 focus:border-neon rounded px-3 py-2 text-neutral-300 placeholder-neutral-700 focus:outline-none transition-colors"
+                    className="bg-[#111111] light:bg-zinc-50 border border-neutral-800 light:border-zinc-200 focus:border-neon light:focus:border-violet rounded px-3 py-2 text-neutral-300 light:text-zinc-900 placeholder-neutral-700 light:placeholder-zinc-400 focus:outline-none transition-colors"
                   />
                 </div>
                 <div className="flex flex-col gap-1.5">
-                  <label className="font-mono text-neutral-500 uppercase">PIN Code</label>
+                  <label className="font-mono text-neutral-500 light:text-zinc-500 uppercase">PIN Code</label>
                   <input
                     type="text"
                     required
                     value={shippingForm.pinCode}
                     onChange={(e) => setShippingForm({ ...shippingForm, pinCode: e.target.value })}
                     placeholder="560001"
-                    className="bg-[#111111] border border-neutral-800 focus:border-neon rounded px-3 py-2 text-neutral-300 placeholder-neutral-700 focus:outline-none transition-colors"
+                    className="bg-[#111111] light:bg-zinc-50 border border-neutral-800 light:border-zinc-200 focus:border-neon light:focus:border-violet rounded px-3 py-2 text-neutral-300 light:text-zinc-900 placeholder-neutral-700 light:placeholder-zinc-400 focus:outline-none transition-colors"
                   />
                 </div>
                 <div className="flex flex-col gap-1.5">
-                  <label className="font-mono text-neutral-500 uppercase">Country</label>
+                  <label className="font-mono text-neutral-500 light:text-zinc-500 uppercase">Country</label>
                   <input
                     type="text"
                     required
                     value={shippingForm.country}
                     onChange={(e) => setShippingForm({ ...shippingForm, country: e.target.value })}
                     placeholder="India"
-                    className="bg-[#111111] border border-neutral-800 focus:border-neon rounded px-3 py-2 text-neutral-300 placeholder-neutral-700 focus:outline-none transition-colors"
+                    className="bg-[#111111] light:bg-zinc-50 border border-neutral-800 light:border-zinc-200 focus:border-neon light:focus:border-violet rounded px-3 py-2 text-neutral-300 light:text-zinc-900 placeholder-neutral-700 light:placeholder-zinc-400 focus:outline-none transition-colors"
                   />
                 </div>
 
@@ -348,24 +348,24 @@ export default function CheckoutPage() {
             </div>
 
             {/* Billing receipt sidebar */}
-            <div className="lg:col-span-4 bg-[#111111]/30 border border-neutral-900 rounded-xl p-6 flex flex-col gap-4">
-              <h3 className="font-display font-semibold uppercase tracking-wider text-neutral-400 text-xs pb-3 border-b border-neutral-900">
+            <div className="lg:col-span-4 bg-[#111111]/30 light:bg-white border border-neutral-900 light:border-zinc-200 rounded-xl p-6 flex flex-col gap-4">
+              <h3 className="font-display font-semibold uppercase tracking-wider text-neutral-400 light:text-zinc-500 text-xs pb-3 border-b border-neutral-900 light:border-zinc-200">
                 Order Value
               </h3>
               <div className="flex flex-col gap-3 font-mono text-xs text-neutral-500">
                 <div className="flex justify-between">
                   <span>Subtotal</span>
-                  <span className="text-neutral-300">₹{subtotal}</span>
+                  <span className="text-neutral-300 light:text-zinc-800">₹{subtotal}</span>
                 </div>
                 <div className="flex justify-between">
                   <span>Shipping</span>
-                  <span className="text-neutral-300">{shipping === 0 ? "Free" : `₹${shipping}`}</span>
+                  <span className="text-neutral-300 light:text-zinc-800">{shipping === 0 ? "Free" : `₹${shipping}`}</span>
                 </div>
               </div>
-              <div className="h-[1px] bg-neutral-900 my-1" />
+              <div className="h-[1px] bg-neutral-900 light:bg-zinc-200 my-1" />
               <div className="flex justify-between items-baseline">
-                <span className="text-xs uppercase font-mono font-bold text-neutral-400">Total</span>
-                <span className="font-mono text-neon glow-text-neon text-lg font-bold">₹{total}</span>
+                <span className="text-xs uppercase font-mono font-bold text-neutral-400 light:text-zinc-500">Total</span>
+                <span className="font-mono text-neon light:text-violet glow-text-neon light:glow-text-none text-lg font-bold">₹{total}</span>
               </div>
             </div>
           </div>
@@ -374,14 +374,14 @@ export default function CheckoutPage() {
         {/* STEP 2: MOCK PAYMENT UI */}
         {step === 2 && (
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-            <div className="lg:col-span-8 bg-[#111111]/30 border border-neutral-900 rounded-xl p-6 sm:p-8">
-              <h2 className="text-sm font-bold uppercase tracking-wider text-neutral-400 font-mono mb-6 pb-3 border-b border-neutral-900 flex items-center gap-2">
-                <CreditCard className="h-4 w-4 text-neon" />
+            <div className="lg:col-span-8 bg-[#111111]/30 light:bg-white border border-neutral-900 light:border-zinc-200 rounded-xl p-6 sm:p-8">
+              <h2 className="text-sm font-bold uppercase tracking-wider text-neutral-400 light:text-zinc-650 font-mono mb-6 pb-3 border-b border-neutral-900 light:border-zinc-200 flex items-center gap-2">
+                <CreditCard className="h-4 w-4 text-neon light:text-violet" />
                 <span>Secure Payment Terminal</span>
               </h2>
 
               {/* Payment Tabs */}
-              <div className="flex border-b border-neutral-900 mb-6 gap-2">
+              <div className="flex border-b border-neutral-900 light:border-zinc-200 mb-6 gap-2">
                 {(["card", "upi", "netbanking"] as const).map((tab) => (
                   <button
                     key={tab}
@@ -389,8 +389,8 @@ export default function CheckoutPage() {
                     onClick={() => setActivePaymentTab(tab)}
                     className={`py-2 px-4 text-xs font-mono uppercase tracking-wider transition-colors cursor-pointer border-b-2 -mb-[2px] ${
                       activePaymentTab === tab
-                        ? "border-neon text-neon font-bold glow-text-neon"
-                        : "border-transparent text-neutral-500 hover:text-neutral-300"
+                        ? "border-neon light:border-violet text-neon light:text-violet font-bold glow-text-neon light:glow-text-none"
+                        : "border-transparent text-neutral-500 light:text-zinc-500 hover:text-neutral-300 light:hover:text-zinc-800"
                     }`}
                   >
                     {tab === "card" ? "Credit/Debit Card" : tab.toUpperCase()}
@@ -402,18 +402,18 @@ export default function CheckoutPage() {
               {activePaymentTab === "card" && (
                 <form onSubmit={handlePaymentSubmit} className="grid grid-cols-1 sm:grid-cols-3 gap-5 text-xs">
                   <div className="flex flex-col gap-1.5 sm:col-span-3">
-                    <label className="font-mono text-neutral-500 uppercase">Cardholder Name</label>
+                    <label className="font-mono text-neutral-500 light:text-zinc-500 uppercase">Cardholder Name</label>
                     <input
                       type="text"
                       required
                       value={cardForm.cardName}
                       onChange={(e) => setCardForm({ ...cardForm, cardName: e.target.value })}
                       placeholder="JAX VANDAL"
-                      className="bg-[#111111] border border-neutral-800 focus:border-neon rounded px-3 py-2 text-neutral-300 placeholder-neutral-700 focus:outline-none transition-colors"
+                      className="bg-[#111111] light:bg-zinc-50 border border-neutral-800 light:border-zinc-200 focus:border-neon light:focus:border-violet rounded px-3 py-2 text-neutral-300 light:text-zinc-900 placeholder-neutral-700 light:placeholder-zinc-400 focus:outline-none transition-colors"
                     />
                   </div>
                   <div className="flex flex-col gap-1.5 sm:col-span-3">
-                    <label className="font-mono text-neutral-500 uppercase">Card Number</label>
+                    <label className="font-mono text-neutral-500 light:text-zinc-500 uppercase">Card Number</label>
                     <input
                       type="text"
                       required
@@ -421,11 +421,11 @@ export default function CheckoutPage() {
                       onChange={(e) => setCardForm({ ...cardForm, cardNumber: e.target.value })}
                       placeholder="4321 0987 6543 2109"
                       maxLength={19}
-                      className="bg-[#111111] border border-neutral-800 focus:border-neon rounded px-3 py-2 text-neutral-300 placeholder-neutral-700 focus:outline-none transition-colors"
+                      className="bg-[#111111] light:bg-zinc-50 border border-neutral-800 light:border-zinc-200 focus:border-neon light:focus:border-violet rounded px-3 py-2 text-neutral-300 light:text-zinc-900 placeholder-neutral-700 light:placeholder-zinc-400 focus:outline-none transition-colors"
                     />
                   </div>
                   <div className="flex flex-col gap-1.5 sm:col-span-2">
-                    <label className="font-mono text-neutral-500 uppercase">Expiry Date</label>
+                    <label className="font-mono text-neutral-500 light:text-zinc-500 uppercase">Expiry Date</label>
                     <input
                       type="text"
                       required
@@ -433,11 +433,11 @@ export default function CheckoutPage() {
                       onChange={(e) => setCardForm({ ...cardForm, expiry: e.target.value })}
                       placeholder="MM/YY"
                       maxLength={5}
-                      className="bg-[#111111] border border-neutral-800 focus:border-neon rounded px-3 py-2 text-neutral-300 placeholder-neutral-700 focus:outline-none transition-colors"
+                      className="bg-[#111111] light:bg-zinc-50 border border-neutral-800 light:border-zinc-200 focus:border-neon light:focus:border-violet rounded px-3 py-2 text-neutral-300 light:text-zinc-900 placeholder-neutral-700 light:placeholder-zinc-400 focus:outline-none transition-colors"
                     />
                   </div>
                   <div className="flex flex-col gap-1.5">
-                    <label className="font-mono text-neutral-500 uppercase">CVV / Security Code</label>
+                    <label className="font-mono text-neutral-500 light:text-zinc-500 uppercase">CVV / Security Code</label>
                     <input
                       type="password"
                       required
@@ -445,11 +445,11 @@ export default function CheckoutPage() {
                       onChange={(e) => setCardForm({ ...cardForm, cvv: e.target.value })}
                       placeholder="•••"
                       maxLength={3}
-                      className="bg-[#111111] border border-neutral-800 focus:border-neon rounded px-3 py-2 text-neutral-300 placeholder-neutral-700 focus:outline-none transition-colors"
+                      className="bg-[#111111] light:bg-zinc-50 border border-neutral-800 light:border-zinc-200 focus:border-neon light:focus:border-violet rounded px-3 py-2 text-neutral-300 light:text-zinc-900 placeholder-neutral-700 light:placeholder-zinc-400 focus:outline-none transition-colors"
                     />
                   </div>
 
-                  <div className="sm:col-span-3 flex items-center justify-between mt-4 border-t border-neutral-900 pt-6 gap-4">
+                  <div className="sm:col-span-3 flex items-center justify-between mt-4 border-t border-neutral-900 light:border-zinc-200 pt-6 gap-4">
                     <button
                       type="button"
                       onClick={() => setStep(1)}
@@ -472,12 +472,12 @@ export default function CheckoutPage() {
               {/* UPI Tab */}
               {activePaymentTab === "upi" && (
                 <div className="text-center py-10 flex flex-col items-center gap-4 text-xs font-mono">
-                  <div className="p-3 bg-[#111111] border border-neutral-800 rounded-lg text-neon glow-text-neon text-lg tracking-widest font-black uppercase">
+                  <div className="p-3 bg-[#111111] light:bg-zinc-50 border border-neutral-800 light:border-zinc-200 rounded-lg text-neon light:text-violet glow-text-neon light:glow-text-none text-lg tracking-widest font-black uppercase">
                     UPI SCAN TERMINAL
                   </div>
-                  <p className="text-neutral-500 max-w-sm leading-relaxed">
+                  <p className="text-neutral-500 light:text-zinc-500 max-w-sm leading-relaxed">
                     UPI interface mapping active. Send transaction request to: <br />
-                    <strong className="text-neutral-300">yeulumin@ybl</strong>
+                    <strong className="text-neutral-300 light:text-zinc-800">yeulumin@ybl</strong>
                   </p>
                   <button
                     onClick={handlePaymentSubmit}
@@ -506,24 +506,24 @@ export default function CheckoutPage() {
             </div>
 
             {/* Bill summary sidebar */}
-            <div className="lg:col-span-4 bg-[#111111]/30 border border-neutral-900 rounded-xl p-6 flex flex-col gap-4">
-              <h3 className="font-display font-semibold uppercase tracking-wider text-neutral-400 text-xs pb-3 border-b border-neutral-900">
+            <div className="lg:col-span-4 bg-[#111111]/30 light:bg-white border border-neutral-900 light:border-zinc-200 rounded-xl p-6 flex flex-col gap-4">
+              <h3 className="font-display font-semibold uppercase tracking-wider text-neutral-400 light:text-zinc-555 text-xs pb-3 border-b border-neutral-900 light:border-zinc-200">
                 Order Value
               </h3>
               <div className="flex flex-col gap-3 font-mono text-xs text-neutral-500">
                 <div className="flex justify-between">
                   <span>Subtotal</span>
-                  <span className="text-neutral-300">₹{subtotal}</span>
+                  <span className="text-neutral-300 light:text-zinc-800">₹{subtotal}</span>
                 </div>
                 <div className="flex justify-between">
                   <span>Shipping</span>
-                  <span className="text-neutral-300">{shipping === 0 ? "Free" : `₹${shipping}`}</span>
+                  <span className="text-neutral-300 light:text-zinc-800">{shipping === 0 ? "Free" : `₹${shipping}`}</span>
                 </div>
               </div>
-              <div className="h-[1px] bg-neutral-900 my-1" />
+              <div className="h-[1px] bg-neutral-900 light:bg-zinc-200 my-1" />
               <div className="flex justify-between items-baseline">
-                <span className="text-xs uppercase font-mono font-bold text-neutral-400">Total</span>
-                <span className="font-mono text-neon glow-text-neon text-lg font-bold">₹{total}</span>
+                <span className="text-xs uppercase font-mono font-bold text-neutral-400 light:text-zinc-500">Total</span>
+                <span className="font-mono text-neon light:text-violet glow-text-neon light:glow-text-none text-lg font-bold">₹{total}</span>
               </div>
             </div>
           </div>
@@ -531,7 +531,7 @@ export default function CheckoutPage() {
 
         {/* STEP 3: ORDER CONFIRMATION / SUCCESS */}
         {step === 3 && (
-          <div className="max-w-2xl mx-auto bg-[#111111]/30 border border-neutral-900 rounded-2xl p-8 sm:p-12 text-center flex flex-col items-center gap-8 relative overflow-hidden">
+          <div className="max-w-2xl mx-auto bg-[#111111]/30 light:bg-white border border-neutral-900 light:border-zinc-200 rounded-2xl p-8 sm:p-12 text-center flex flex-col items-center gap-8 relative overflow-hidden">
             <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-neon via-violet to-neon" />
             
             {/* Animated Success Ring */}
@@ -540,45 +540,45 @@ export default function CheckoutPage() {
             </div>
 
             <div className="flex flex-col gap-2">
-              <h2 className="font-display text-2xl sm:text-4xl font-extrabold uppercase tracking-wide text-white">
+              <h2 className="font-display text-2xl sm:text-4xl font-extrabold uppercase tracking-wide text-white light:text-zinc-900">
                 TRANSACTION COMPLETED
               </h2>
-              <p className="text-xs font-mono text-neutral-500">
+              <p className="text-xs font-mono text-neutral-500 light:text-zinc-500">
                 Order compiled into dispatch matrix.
               </p>
             </div>
 
             {/* Order Card Detail Info */}
-            <div className="w-full bg-neutral-950/60 border border-neutral-900/60 rounded-xl p-5 flex flex-col gap-4 font-mono text-xs text-neutral-400 text-left">
-              <div className="flex justify-between items-center pb-3 border-b border-neutral-900">
-                <span className="text-neutral-500">Order ID Code:</span>
+            <div className="w-full bg-neutral-950/60 light:bg-zinc-50 border border-neutral-900/60 light:border-zinc-200 rounded-xl p-5 flex flex-col gap-4 font-mono text-xs text-neutral-400 light:text-zinc-650 text-left">
+              <div className="flex justify-between items-center pb-3 border-b border-neutral-900 light:border-zinc-200">
+                <span className="text-neutral-500 light:text-zinc-500">Order ID Code:</span>
                 <div className="flex items-center gap-2">
-                  <span className="text-neon glow-text-neon font-bold">{orderId}</span>
+                  <span className="text-neon light:text-violet glow-text-neon light:glow-text-none font-bold">{orderId}</span>
                   <button
                     onClick={copyOrderId}
-                    className="p-1 hover:text-white transition-colors cursor-pointer"
+                    className="p-1 hover:text-white light:hover:text-zinc-800 transition-colors cursor-pointer"
                     title="Copy Order ID"
                   >
                     <Copy className="h-3.5 w-3.5" />
                   </button>
-                  {isCopied && <span className="text-[9px] text-neon uppercase">Copied!</span>}
+                  {isCopied && <span className="text-[9px] text-neon light:text-violet uppercase font-bold">Copied!</span>}
                 </div>
               </div>
 
               <div className="flex flex-col gap-2">
                 <div className="flex justify-between">
-                  <span className="text-neutral-500">Recipient:</span>
-                  <span className="text-neutral-200">{shippingForm.fullName}</span>
+                  <span className="text-neutral-500 light:text-zinc-500">Recipient:</span>
+                  <span className="text-neutral-200 light:text-zinc-800">{shippingForm.fullName}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-neutral-500">Destination:</span>
-                  <span className="text-neutral-200 text-right">
+                  <span className="text-neutral-500 light:text-zinc-500">Destination:</span>
+                  <span className="text-neutral-200 light:text-zinc-800 text-right">
                     {shippingForm.city}, {shippingForm.state}, IN
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-neutral-500">Estimate Delivery:</span>
-                  <span className="text-neon font-bold text-right">{deliveryDate}</span>
+                  <span className="text-neutral-500 light:text-zinc-500">Estimate Delivery:</span>
+                  <span className="text-neon light:text-violet font-bold text-right">{deliveryDate}</span>
                 </div>
               </div>
             </div>
@@ -589,7 +589,7 @@ export default function CheckoutPage() {
                 onClick={() => {
                   alert(`Tracking code generated. Checking logs for Order ID: ${orderId}... Shipment status: IN TRANSIT.`);
                 }}
-                className="flex-grow py-3 bg-[#111111] border border-neutral-800 text-neutral-300 hover:border-neon hover:text-neon text-xs font-bold uppercase tracking-wider rounded-lg transition-colors cursor-pointer flex items-center justify-center gap-1.5"
+                className="flex-grow py-3 bg-[#111111] light:bg-zinc-100 border border-neutral-800 light:border-zinc-200 text-neutral-300 light:text-zinc-700 hover:border-neon light:hover:border-violet hover:text-neon light:hover:text-violet text-xs font-bold uppercase tracking-wider rounded-lg transition-colors cursor-pointer flex items-center justify-center gap-1.5"
               >
                 <Terminal className="h-4 w-4" />
                 <span>Track Your Order</span>
