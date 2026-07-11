@@ -29,10 +29,12 @@ export default function Footer() {
           
           {/* Brand Col */}
           <div className="flex flex-col gap-4 text-left">
-            <Link href="/" className="flex items-center gap-2">
-              <div className="h-6 w-6 rounded bg-blue-600 flex items-center justify-center text-white font-bold text-xs shadow">
-                🜉
-              </div>
+            <Link href="/" className="flex items-center gap-1.5">
+              <img
+                src="/logos/trimmed_yeulumin ai-05.png"
+                alt="Yeulumin AI Logo"
+                className="h-6 w-6 object-contain"
+              />
               <span className="text-sm font-black uppercase tracking-wider text-neutral-900">
                 Yeulumin AI
               </span>

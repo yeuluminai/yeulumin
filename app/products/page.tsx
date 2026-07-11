@@ -360,7 +360,7 @@ export default function ProductsPage() {
         </Link>
 
         <Link
-          href={user ? "/collection" : "/auth"}
+          href="/profile"
           className="flex flex-col items-center gap-1 text-neutral-400 hover:text-neutral-900 transition-colors py-1.5 px-3"
         >
           <UserIcon className="h-5 w-5" />

@@ -135,7 +135,7 @@ export default function ViewerControls() {
       : `/logos/trimmed_yeulumin ai-05.png`;
 
     const description = (design === "ai" && customTextureUrl)
-      ? `${colorLabel} fabric style, size ${size}. Customized via Stability AI (Scale: ${(decalScale * 100).toFixed(0)}%, Position Y: ${decalPosY.toFixed(2)}).`
+      ? `${colorLabel} fabric style, size ${size}. Customized via Gemini AI (Scale: ${(decalScale * 100).toFixed(0)}%, Position Y: ${decalPosY.toFixed(2)}).`
       : `${colorLabel} fabric style, size ${size}. Procedural 3D studio layout (Scale: ${(decalScale * 100).toFixed(0)}%, Position Y: ${decalPosY.toFixed(2)}).`;
 
     addItem({

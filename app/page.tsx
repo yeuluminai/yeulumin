@@ -3,13 +3,20 @@
 import React, { useEffect, useState, useMemo } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Sparkles, ShoppingBag, Heart, Search, SlidersHorizontal, ArrowRight, Home as HomeIcon, Image as GalleryIcon, User, Menu, X, ArrowLeft } from "lucide-react";
+import { Sparkles, ShoppingBag, Heart, Search, SlidersHorizontal, ArrowRight, Home as HomeIcon, Image as GalleryIcon, User, Menu, X, ArrowLeft, ChevronLeft, ChevronRight } from "lucide-react";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import GrainOverlay from "./components/GrainOverlay";
 import { PRODUCTS, Product } from "./lib/products";
 import { useAuth } from "./context/AuthContext";
 import { useCartStore } from "./store/cartStore";
+
+const HERO_IMAGES = [
+  "/landing_page/ChatGPT Image Jun 30, 2026, 11_23_11 AM.png",
+  "/landing_page/ChatGPT Image Jun 30, 2026, 11_27_10 AM.png",
+  "/landing_page/ChatGPT Image Jun 30, 2026, 11_29_18 AM.png",
+  "/landing_page/ChatGPT Image Jun 30, 2026, 11_38_39 AM.png"
+];
 
 export default function HomePage() {
   const { user } = useAuth();
@@ -26,10 +33,10 @@ export default function HomePage() {
   // Auto slide dots indicator simulation
   useEffect(() => {
     const timer = setInterval(() => {
-      setHeroSlide((prev) => (prev + 1) % 3);
-    }, 4500);
+      setHeroSlide((prev) => (prev + 1) % HERO_IMAGES.length);
+    }, 5000);
     return () => clearInterval(timer);
-  }, []);
+  }, [heroSlide]);
 
   const handleToggleWishlist = (id: string, e: React.MouseEvent) => {
     e.preventDefault();
@@ -95,146 +102,77 @@ export default function HomePage() {
       {/* Desktop Header Navbar */}
       <Navbar />
 
-      <main className="flex-grow mx-auto max-w-7xl w-full px-4 sm:px-6 lg:px-8 py-6 pb-24 md:pb-12">
-        
-        {/* ─── 1. HERO SECTION (T-SHIRT CUSTOMIZATION FLOW) ─── */}
-        <section className="relative w-full py-8 md:py-12 flex flex-col items-center select-none">
-          {/* Main Visual Carousel */}
-          <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-6 items-center max-w-4xl relative">
-            
-            {/* Visual connecting paths (electric/neon blue arcs on desktop) */}
-            <div className="hidden md:block absolute top-[40%] left-[22%] right-[22%] h-[2px] bg-gradient-to-r from-blue-400/20 via-blue-500/80 to-blue-400/20 z-0 pointer-events-none">
-              <div className="absolute inset-0 bg-blue-400 blur-sm animate-pulse" />
-            </div>
-
-            {/* Left Card: Blank Shirt */}
-            <div className="flex flex-col items-center bg-white border border-neutral-200/80 rounded-2xl p-6 shadow-sm z-10 transition-all duration-300 hover:shadow-md">
-              <span className="text-[10px] font-mono text-neutral-400 uppercase tracking-widest mb-3">
-                01. SELECT CANVAS
-              </span>
-              <div className="aspect-square w-full max-w-[200px] flex items-center justify-center bg-[#F9FAFB] rounded-xl overflow-hidden p-4">
-                <img
-                  src="https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=600&auto=format&fit=crop&q=80"
-                  alt="Blank template t-shirt"
-                  className="max-h-full max-w-full object-contain"
-                />
-              </div>
-            </div>
-
-            {/* Middle Card: Cyberpunk Decal Graphic */}
-            <div className="flex flex-col items-center bg-[#0C0C0C] border border-neutral-900 rounded-2xl p-6 shadow-xl z-10 text-white relative min-h-[290px] justify-between">
-              <span className="text-[10px] font-mono text-neutral-600 uppercase tracking-widest">
-                02. APPLY MATRIX
-              </span>
-              
-              {/* Graphic container */}
-              <div className="w-full max-w-[170px] aspect-[3/4] border border-emerald-500/40 rounded-xl bg-black p-4 flex flex-col justify-between items-center relative overflow-hidden group shadow-[0_0_20px_rgba(16,185,129,0.15)]">
-                <div className="absolute inset-0 bg-gradient-to-b from-emerald-500/5 to-transparent pointer-events-none" />
-                
-                {/* Glowing design elements */}
-                <span className="text-sm font-display font-black tracking-widest text-emerald-400 glow-text-emerald">
-                  CHAOS
-                </span>
-                
-                {/* Skull representation */}
-                <div className="my-2 text-3xl animate-pulse">💀</div>
-                
-                <span className="text-[8px] font-mono text-neutral-500 uppercase tracking-widest">
-                  YEULUMIN AI
-                </span>
-              </div>
-
-              {/* Customize CTA Pill button */}
-              <Link
-                href="/customize"
-                className="inline-flex items-center gap-2 rounded-full bg-white text-[#0A0A0A] border border-neutral-200 pl-4 pr-1.5 py-1.5 text-xs font-bold shadow-md hover:shadow-lg transition-all transform hover:-translate-y-0.5"
+      {/* ─── 1. HERO CAROUSEL SECTION ─── */}
+      <section className="relative w-full flex flex-col items-center select-none py-0 px-0 -mt-20">
+        <div className="relative w-full aspect-square md:aspect-[1652/952] overflow-hidden flex items-center justify-center group/carousel bg-[#edeef2]">
+          {/* Slides container */}
+          {HERO_IMAGES.map((img, index) => {
+            return (
+              <div
+                key={index}
+                className="absolute inset-0 transition-transform duration-500 ease-in-out"
+                style={{
+                  transform: `translateX(${(index - heroSlide) * 100}%)`,
+                }}
               >
-                <span>CUSTOMIZE YOURS</span>
-                <div className="h-6 w-6 rounded-full bg-blue-600 flex items-center justify-center text-white">
-                  <Sparkles className="h-3.5 w-3.5 fill-current" />
-                </div>
-              </Link>
-            </div>
-
-            {/* Right Card: Compiled Streetwear garment */}
-            <div className="flex flex-col items-center bg-white border border-neutral-200/80 rounded-2xl p-6 shadow-sm z-10 transition-all duration-300 hover:shadow-md">
-              <span className="text-[10px] font-mono text-neutral-400 uppercase tracking-widest mb-3">
-                03. COMPILE APPAREL
-              </span>
-              <div className="aspect-square w-full max-w-[200px] flex items-center justify-center bg-[#F9FAFB] rounded-xl overflow-hidden p-2">
                 <img
-                  src="/collection/ChatGPT Image Jun 30, 2026, 12_24_22 PM.png"
-                  alt="Finished customized skull tee"
-                  className="max-h-full max-w-full object-contain"
+                  src={img}
+                  alt={`Hero Slide ${index + 1}`}
+                  className="w-full h-full object-contain md:object-cover"
                 />
               </div>
-            </div>
+            );
+          })}
 
-          </div>
+          {/* Left navigation arrow */}
+          <button
+            onClick={() => setHeroSlide((prev) => (prev - 1 + HERO_IMAGES.length) % HERO_IMAGES.length)}
+            className="absolute left-4 top-1/2 -translate-y-1/2 h-10 w-10 rounded-full bg-black/40 hover:bg-black/60 text-white backdrop-blur-md border border-white/10 flex items-center justify-center shadow-md hover:scale-105 transition-all opacity-0 group-hover/carousel:opacity-100 focus:opacity-100 z-20 cursor-pointer"
+            aria-label="Previous Slide"
+          >
+            <ChevronLeft className="h-5 w-5" />
+          </button>
 
-          {/* Dots Indicator */}
-          <div className="flex items-center gap-2 mt-6">
-            {[0, 1, 2].map((i) => (
+          {/* Right navigation arrow */}
+          <button
+            onClick={() => setHeroSlide((prev) => (prev + 1) % HERO_IMAGES.length)}
+            className="absolute right-4 top-1/2 -translate-y-1/2 h-10 w-10 rounded-full bg-black/40 hover:bg-black/60 text-white backdrop-blur-md border border-white/10 flex items-center justify-center shadow-md hover:scale-105 transition-all opacity-0 group-hover/carousel:opacity-100 focus:opacity-100 z-20 cursor-pointer"
+            aria-label="Next Slide"
+          >
+            <ChevronRight className="h-5 w-5" />
+          </button>
+
+          {/* Bottom dot indicators */}
+          <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-1.5 z-20 bg-black/40 backdrop-blur-md px-2.5 py-1.5 rounded-full border border-white/10">
+            {HERO_IMAGES.map((_, i) => (
               <button
                 key={i}
                 onClick={() => setHeroSlide(i)}
-                className={`h-2 rounded-full transition-all duration-300 ${
-                  heroSlide === i ? "w-6 bg-neutral-900" : "w-2 bg-neutral-300"
+                className={`h-1 rounded-full transition-all duration-300 cursor-pointer ${
+                  heroSlide === i ? "w-4 bg-white" : "w-1 bg-white/40 hover:bg-white/60"
                 }`}
+                aria-label={`Go to slide ${i + 1}`}
               />
             ))}
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* ─── 2. CURRENT OFFERS BANNER ─── */}
-        <section className="my-10 w-full">
-          <div className="bg-[#0B0B0B] text-white border border-neutral-900 rounded-2xl p-8 md:p-10 relative overflow-hidden flex flex-col md:flex-row justify-between items-center shadow-xl">
-            
-            {/* Background elements */}
-            <div className="absolute top-0 right-0 w-80 h-80 rounded-full bg-emerald-500/5 blur-[120px] pointer-events-none" />
-            <div className="absolute bottom-0 left-0 w-72 h-72 rounded-full bg-blue-500/5 blur-[100px] pointer-events-none" />
+      {/* ─── 2. CURRENT OFFERS BANNER ─── */}
+      <section className="w-full px-4 sm:px-6 md:px-0 my-10 md:my-0">
+        <Link
+          href="/products"
+          className="block relative w-full aspect-[1706/922] rounded-2xl md:rounded-none overflow-hidden shadow-md md:shadow-none group border border-neutral-200/40 md:border-none"
+        >
+          <img
+            src="/offers/ChatGPT Image Jun 30, 2026, 11_45_28 AM.png"
+            alt="Current Offers Banner"
+            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-102"
+          />
+        </Link>
+      </section>
 
-            {/* Top row controls */}
-            <div className="absolute top-6 right-6">
-              <Link
-                href="/products"
-                className="text-xs font-semibold text-neutral-400 hover:text-white transition-colors flex items-center gap-1"
-              >
-                <span>View all</span>
-                <ArrowRight className="h-3 w-3" />
-              </Link>
-            </div>
-
-            {/* Left contents */}
-            <div className="flex flex-col items-start gap-4 text-left max-w-md relative z-10">
-              <span className="text-[10px] font-mono text-emerald-400 uppercase tracking-widest font-bold">
-                CURRENT OFFERS
-              </span>
-              <h2 className="font-display text-4xl sm:text-5xl font-black uppercase tracking-tight leading-none text-white">
-                FLAT <br />
-                <span className="text-emerald-400 glow-text-emerald">25% OFF</span>
-              </h2>
-              <p className="text-xs text-neutral-400 leading-relaxed max-w-xs">
-                Unlock your creative matrix with a flat discount on all bespoke AI-designed t-shirts & hoodies.
-              </p>
-              
-              {/* Promo Code Badge */}
-              <div className="mt-2 inline-flex items-center px-4 py-2 border border-dashed border-emerald-500/40 bg-emerald-500/5 rounded-lg text-xs font-mono font-bold text-emerald-400">
-                <span>CODE: YEULUMIN25</span>
-              </div>
-            </div>
-
-            {/* Right contents: Black print hoodie preview mockup */}
-            <div className="w-full max-w-[280px] aspect-square flex items-center justify-center mt-8 md:mt-0 relative z-10">
-              <img
-                src="/collection/ChatGPT Image Jun 30, 2026, 12_09_57 PM.png"
-                alt="Discount offer preview hoodie"
-                className="max-h-full max-w-full object-contain filter drop-shadow-[0_15px_30px_rgba(0,0,0,0.6)]"
-              />
-            </div>
-
-          </div>
-        </section>
+      <main className="flex-grow mx-auto max-w-7xl w-full px-4 sm:px-6 lg:px-8 py-6 pb-24 md:pb-12">
 
         {/* ─── 3. PRE-DEFINED STYLES GRID SECTION ─── */}
         <section className="my-12">
@@ -341,7 +279,7 @@ export default function HomePage() {
                         <span className="text-[10px] uppercase font-mono tracking-widest text-neutral-400 block mb-1.5 font-bold">
                           {product.category}
                         </span>
-                        <div className="flex justify-between items-start mb-3">
+                        <div className="flex justify-between items-start mb-0">
                           <h3 className="font-bold text-neutral-800 text-base group-hover:text-black transition-colors leading-snug">
                             {product.name}
                           </h3>
@@ -349,9 +287,6 @@ export default function HomePage() {
                             ₹{product.price}
                           </span>
                         </div>
-                        <p className="text-xs text-neutral-500 leading-relaxed line-clamp-2">
-                          {product.description}
-                        </p>
                       </div>
                     </div>
 
@@ -423,7 +358,7 @@ export default function HomePage() {
         </Link>
 
         <Link
-          href={user ? "/collection" : "/auth"}
+          href="/profile"
           className="flex flex-col items-center gap-1 text-neutral-400 hover:text-neutral-900 transition-colors py-1.5 px-3"
         >
           <User className="h-5 w-5" />

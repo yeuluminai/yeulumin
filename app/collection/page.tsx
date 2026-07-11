@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useAuth } from "../context/AuthContext";
 import { supabase, isSupabaseConfigured } from "../lib/supabase";
-import { Sparkles, Trash2, ArrowRight, ArrowLeft, Heart, Loader2, ShoppingBag } from "lucide-react";
+import { Sparkles, Trash2, ArrowRight, ArrowLeft, Heart, Loader2, ShoppingBag, Home as HomeIcon, Image as GalleryIcon, User } from "lucide-react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import GrainOverlay from "../components/GrainOverlay";
@@ -192,12 +192,14 @@ export default function UserCollectionPage() {
                           style={{ backgroundColor: item.color }}
                         />
                       </span>
-                      <h2 className="font-bold text-neutral-800 text-base group-hover:text-black transition-colors mb-2 leading-snug">
-                        {item.name}
-                      </h2>
-                      <p className="text-xs text-neutral-500 leading-relaxed line-clamp-3 mb-4">
-                        {item.description || "Bespoke customized streetwear design."}
-                      </p>
+                      <div className="flex justify-between items-start mb-4">
+                        <h2 className="font-bold text-neutral-800 text-base group-hover:text-black transition-colors leading-snug">
+                          {item.name}
+                        </h2>
+                        <span className="font-mono text-neutral-900 font-bold text-base whitespace-nowrap ml-3">
+                          ₹999
+                        </span>
+                      </div>
 
                       {/* Add to Cart Button */}
                       <button
@@ -247,6 +249,45 @@ export default function UserCollectionPage() {
       </main>
 
       <Footer />
+
+      {/* ─── MOBILE BOTTOM TAB NAVIGATION ─── */}
+      <nav className="fixed bottom-0 inset-x-0 h-16 bg-white border-t border-neutral-200/80 md:hidden flex justify-around items-center z-40 px-2 shadow-[0_-5px_15px_rgba(0,0,0,0.03)]">
+        
+        <Link
+          href="/"
+          className="flex flex-col items-center gap-1 text-neutral-400 hover:text-neutral-900 transition-colors py-1.5 px-3"
+        >
+          <HomeIcon className="h-5 w-5" />
+          <span className="text-[9px] uppercase tracking-wider font-semibold">Home</span>
+        </Link>
+
+        <Link
+          href="/products"
+          className="flex flex-col items-center gap-1 text-neutral-400 hover:text-neutral-900 transition-colors py-1.5 px-3"
+        >
+          <GalleryIcon className="h-5 w-5" />
+          <span className="text-[9px] uppercase tracking-wider font-semibold">Gallery</span>
+        </Link>
+
+        <Link
+          href="/collection"
+          className="flex flex-col items-center gap-1 text-neutral-400 hover:text-neutral-900 transition-colors py-1.5 px-3 relative"
+        >
+          <Heart className="h-5 w-5 text-neutral-900 fill-current" />
+          <span className="text-[9px] font-bold uppercase tracking-wider text-neutral-900">Wishlist</span>
+          <div className="absolute bottom-0 h-1.5 w-1.5 rounded-full bg-emerald-500" />
+        </Link>
+
+        <Link
+          href="/profile"
+          className="flex flex-col items-center gap-1 text-neutral-400 hover:text-neutral-900 transition-colors py-1.5 px-3"
+        >
+          <User className="h-5 w-5" />
+          <span className="text-[9px] uppercase tracking-wider font-semibold">Profile</span>
+        </Link>
+
+      </nav>
+
     </div>
   );
 }

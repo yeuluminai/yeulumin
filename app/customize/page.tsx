@@ -240,17 +240,18 @@ export default function DesignLabPage() {
         </button>
 
         {/* Logo and title */}
-        <div className="flex items-center gap-2">
-          {/* Custom blue hexagonal logo symbol */}
-          <div className="h-7 w-7 rounded-lg bg-blue-600 flex items-center justify-center text-white font-bold shadow-md shadow-blue-500/30">
-            🜉
-          </div>
+        <div className="flex items-center gap-1.5">
+          <img
+            src="/logos/trimmed_yeulumin ai-05.png"
+            alt="Yeulumin AI Logo"
+            className="h-7 w-7 object-contain"
+          />
           <span className="font-sans font-black text-base uppercase tracking-wider text-neutral-900">
             Yeulumin Ai
           </span>
         </div>
 
-        {/* Right Checkout & Save action pill */}
+        {/* Right Save action pill */}
         <div className="flex items-center gap-3">
           <button
             onClick={handleSaveToCollection}
@@ -258,13 +259,6 @@ export default function DesignLabPage() {
             title="Save to Collection"
           >
             <FolderHeart className={`h-4.5 w-4.5 ${wishlistSuccess ? "text-red-500 fill-current" : ""}`} />
-          </button>
-          
-          <button
-            onClick={handleAddToCart}
-            className="px-5 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-xs font-bold uppercase tracking-wider rounded-full shadow-md shadow-blue-500/20 hover:scale-103 transition-all cursor-pointer"
-          >
-            {cartSuccess ? "Added!" : "Add to Cart (₹999)"}
           </button>
         </div>
       </header>
@@ -276,8 +270,8 @@ export default function DesignLabPage() {
         <div className="w-full max-w-2xl h-[400px] md:h-[450px] relative flex items-center justify-center">
           
           {/* Orbital blue glow ring behind t-shirt mesh */}
-          <div className="absolute inset-0 m-auto w-[28rem] h-[28rem] rounded-full border border-blue-500/10 bg-transparent flex items-center justify-center pointer-events-none select-none z-0">
-            <div className="w-[26rem] h-[26rem] rounded-full border border-blue-400/20 blur-[8px] animate-pulse" />
+          <div className="absolute inset-0 m-auto w-[18rem] h-[18rem] sm:w-[22rem] sm:h-[22rem] md:w-[28rem] md:h-[28rem] rounded-full border border-blue-500/10 bg-transparent flex items-center justify-center pointer-events-none select-none z-0">
+            <div className="w-[16rem] h-[16rem] sm:w-[20rem] sm:h-[20rem] md:w-[26rem] md:h-[26rem] rounded-full border border-blue-400/20 blur-[8px] animate-pulse" />
           </div>
 
           {/* Three.js interactive model canvas */}
@@ -616,6 +610,17 @@ export default function DesignLabPage() {
           </button>
 
         </section>
+
+        {/* Add to Cart CTA Button */}
+        <div className="w-full max-w-xl z-20">
+          <button
+            onClick={handleAddToCart}
+            className="w-full py-3.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white text-xs font-black uppercase tracking-wider rounded-2xl shadow-lg shadow-blue-500/20 hover:scale-101 active:scale-99 transition-all cursor-pointer flex items-center justify-center gap-2"
+          >
+            <ShoppingBag className="h-4.5 w-4.5" />
+            <span>{cartSuccess ? "Added to Cart!" : "Add to Cart (₹999)"}</span>
+          </button>
+        </div>
 
         {/* ─── STYLES FOR YOU (TEMPLATE SELECTOR CAROUSEL) ─── */}
         <section className="w-full my-8 text-left">

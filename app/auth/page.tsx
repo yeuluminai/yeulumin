@@ -279,10 +279,12 @@ export default function AuthPage() {
 
       <header className="sticky top-0 z-40 w-full border-b border-neutral-200/60 bg-white/80 backdrop-blur-md">
         <div className="mx-auto flex max-w-7xl h-20 items-center justify-between px-4 sm:px-6 lg:px-8">
-          <Link href="/" className="group flex items-center gap-2">
-            <div className="h-7 w-7 rounded bg-blue-600 flex items-center justify-center text-white font-bold text-xs shadow shadow-blue-500/10">
-              🜉
-            </div>
+          <Link href="/" className="group flex items-center gap-1.5">
+            <img
+              src="/logos/trimmed_yeulumin ai-05.png"
+              alt="Yeulumin AI Logo"
+              className="h-7 w-7 object-contain shadow-sm"
+            />
             <span className="text-sm font-black uppercase tracking-wider text-neutral-900">
               Yeulumin AI
             </span>

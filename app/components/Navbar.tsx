@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ShoppingBag, Sparkles, Menu, X } from "lucide-react";
+import { ShoppingBag, Sparkles, Menu, X, Search, Home, Compass, Heart, User } from "lucide-react";
 import { useCartStore, getCartTotalItems } from "../store/cartStore";
 import { useAuth } from "../context/AuthContext";
 
@@ -29,16 +29,28 @@ export default function Navbar() {
     { name: "Design Lab", href: "/customize" },
   ];
 
+  const isHome = pathname === "/";
+
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-neutral-200/60 bg-white/80 backdrop-blur-md">
+    <header className={`sticky top-0 z-40 w-full transition-all duration-300 ${isHome ? "bg-transparent border-none" : "border-b border-neutral-200/60 bg-white/80 backdrop-blur-md"}`}>
       <div className="mx-auto flex max-w-7xl h-20 items-center justify-between px-4 sm:px-6 lg:px-8">
         
-        {/* Left: Brand Logo */}
-        <Link href="/" className="group flex items-center gap-2">
-          {/* Custom blue hexagonal logo symbol */}
-          <div className="h-7 w-7 rounded-lg bg-blue-600 flex items-center justify-center text-white font-bold shadow-md shadow-blue-500/20">
-            🜉
-          </div>
+        {/* Mobile Menu Button (Hamburger Toggle) - Shown on Left on Mobile */}
+        <button
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          className="md:hidden text-neutral-900 p-2 hover:text-neutral-600 transition-colors focus:outline-none"
+          aria-label="Toggle Menu"
+        >
+          {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+        </button>
+
+        {/* Left: Brand Logo - Hidden on Mobile */}
+        <Link href="/" className="group hidden md:flex items-center gap-1.5">
+          <img
+            src="/logos/trimmed_yeulumin ai-05.png"
+            alt="Yeulumin AI Logo"
+            className="h-5 w-5 object-contain transition-transform group-hover:scale-105"
+          />
           <span className="text-sm font-black uppercase tracking-wider text-neutral-900">
             Yeulumin AI
           </span>
@@ -105,6 +117,13 @@ export default function Navbar() {
                       <span className="px-3 py-1.5 text-[9px] text-neutral-400 font-mono border-b border-neutral-100 truncate">
                         {user.email}
                       </span>
+                       <Link
+                        href="/profile"
+                        onClick={() => setDropdownOpen(false)}
+                        className="px-3 py-2 text-xs text-neutral-600 hover:bg-neutral-50 hover:text-neutral-900 rounded-lg transition-colors font-medium text-left"
+                      >
+                        My Profile
+                      </Link>
                       <Link
                         href="/collection"
                         onClick={() => setDropdownOpen(false)}
@@ -153,11 +172,12 @@ export default function Navbar() {
           </Link>
         </div>
 
-        {/* Mobile Menu Buttons */}
-        <div className="flex items-center gap-4 md:hidden">
+        {/* Mobile Action Buttons - Shown on Right on Mobile */}
+        <div className="flex md:hidden items-center space-x-2">
+          {/* Cart Icon */}
           <Link
             href="/cart"
-            className="relative flex items-center justify-center p-2 text-neutral-600 hover:text-neutral-950 transition-colors"
+            className="relative flex items-center justify-center p-2 text-neutral-900 hover:text-neutral-600 transition-colors"
           >
             <ShoppingBag className="h-5 w-5" />
             {cartItemCount > 0 && (
@@ -166,12 +186,14 @@ export default function Navbar() {
               </span>
             )}
           </Link>
-          <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="text-neutral-600 hover:text-neutral-950 p-2 transition-colors focus:outline-none"
+          
+          {/* Search Icon */}
+          <Link
+            href="/products"
+            className="p-2 text-neutral-900 hover:text-neutral-600 transition-colors"
           >
-            {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-          </button>
+            <Search className="h-5.5 w-5.5" />
+          </Link>
         </div>
       </div>
 
