@@ -159,6 +159,8 @@ export default function TshirtModel({
   useEffect(() => {
     if (shirtMeshNode && shirtMeshNode.material) {
       shirtMeshNode.material.color.set(color);
+      // Remove ambient occlusion map to prevent the backside of the shirt from rendering black
+      shirtMeshNode.material.aoMap = null;
       shirtMeshNode.material.roughness = 0.6;
       shirtMeshNode.material.needsUpdate = true;
     }
@@ -315,8 +317,6 @@ export default function TshirtModel({
       <group position={[0, -0.55, 0]} scale={[responsiveScale, responsiveScale, responsiveScale]}>
         <mesh
           ref={meshRef}
-          castShadow
-          receiveShadow
           geometry={shirtMeshNode.geometry}
           material={shirtMeshNode.material}
         >
