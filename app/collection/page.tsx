@@ -137,7 +137,8 @@ export default function UserCollectionPage() {
           <div className="grid grid-cols-3 gap-2 sm:gap-8">
             {customizations.map((item) => {
               // Create dynamic remix URL passing all specific styling states
-              const remixUrl = `/customize?color=${encodeURIComponent(item.color)}&design=${encodeURIComponent(item.design)}&texture=${encodeURIComponent(item.custom_texture_url || "")}&scale=${item.decal_scale}&x=${item.decal_pos_x}&y=${item.decal_pos_y}&target=${encodeURIComponent(item.decal_target)}`;
+              const isHoodieItem = item.name.toLowerCase().includes("hoodie") || (item.description && item.description.toLowerCase().includes("hoodie"));
+              const remixUrl = `/customize?color=${encodeURIComponent(item.color)}&design=${encodeURIComponent(item.design)}&texture=${encodeURIComponent(item.custom_texture_url || "")}&scale=${item.decal_scale}&x=${item.decal_pos_x}&y=${item.decal_pos_y}&target=${encodeURIComponent(item.decal_target)}&garment=${isHoodieItem ? "hoodie" : "tshirt"}`;
 
               return (
                 <div

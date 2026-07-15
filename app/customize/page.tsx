@@ -90,6 +90,7 @@ export default function DesignLabPage() {
     decalPosY,
     decalPosX,
     decalTarget,
+    garmentType,
     setColor,
     setDesign,
     setView,
@@ -102,6 +103,7 @@ export default function DesignLabPage() {
     setDecalPosY,
     setDecalPosX,
     setDecalTarget,
+    setGarmentType,
     resetDecalPlacement,
   } = useViewerStore();
 
@@ -118,11 +120,19 @@ export default function DesignLabPage() {
   const [viewMenuOpen, setViewMenuOpen] = useState(false);
   const [wishlistSuccess, setWishlistSuccess] = useState(false);
   const [cartSuccess, setCartSuccess] = useState(false);
+  const [showGarmentModal, setShowGarmentModal] = useState(true);
 
   // Load preset or custom params on mount
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
     const presetId = searchParams.get("preset");
+    const garmentParam = searchParams.get("garment");
+
+    if (garmentParam === "hoodie" || garmentParam === "tshirt") {
+      setGarmentType(garmentParam as "hoodie" | "tshirt");
+      setShowGarmentModal(false);
+    }
+
     if (presetId) {
       const product = PRODUCTS.find((p) => p.id === presetId);
       if (product) {
@@ -134,9 +144,17 @@ export default function DesignLabPage() {
         }
         if (product.defaultView) setView(product.defaultView);
         if (product.printPosition) setDecalTarget(product.printPosition);
+        
+        // Check if preset is a hoodie
+        const nameLower = product.name.toLowerCase();
+        const descLower = product.description.toLowerCase();
+        if (nameLower.includes("hoodie") || descLower.includes("hoodie")) {
+          setGarmentType("hoodie");
+          setShowGarmentModal(false);
+        }
       }
     }
-  }, [setColor, setCustomTextureUrl, setCustomPrompt, setDesign, setView, setDecalTarget]);
+  }, [setColor, setCustomTextureUrl, setCustomPrompt, setDesign, setView, setDecalTarget, setGarmentType]);
 
   // Synthesis generator using Stability AI
   const handleGenerate = async (e: React.FormEvent) => {
@@ -183,9 +201,9 @@ export default function DesignLabPage() {
     setCartSuccess(true);
     addItem({
       id: `custom-lab-${Date.now()}`,
-      name: `Custom ${selectedTag} Tee`,
-      description: prompt || "Bespoke customized streetwear garment.",
-      price: 999,
+      name: `Custom ${selectedTag} ${garmentType === "hoodie" ? "Hoodie" : "Tee"}`,
+      description: prompt || `Bespoke customized streetwear ${garmentType === "hoodie" ? "hoodie" : "garment"}.`,
+      price: garmentType === "hoodie" ? 1999 : 999, // Hoodies are ₹1999, Tees are ₹999
       quantity: 1,
       size: size,
       color: color,
@@ -213,8 +231,8 @@ export default function DesignLabPage() {
     try {
       const { error } = await supabase.from("customizations").insert({
         user_id: user.id,
-        name: `Bespoke ${selectedTag} Tee`,
-        description: prompt || "Bespoke customized streetwear garment.",
+        name: `Bespoke ${selectedTag} ${garmentType === "hoodie" ? "Hoodie" : "Tee"}`,
+        description: prompt || `Bespoke customized streetwear ${garmentType === "hoodie" ? "hoodie" : "garment"}.`,
         color,
         design: selectedTag.toLowerCase(),
         custom_texture_url: customTextureUrl,
@@ -500,6 +518,29 @@ export default function DesignLabPage() {
             {activeTool === "garment" && (
               <div className="flex flex-col gap-4 text-left">
                 
+                {/* Select Garment Type */}
+                <div className="flex flex-col gap-2">
+                  <span className="text-[10px] font-mono text-neutral-400 uppercase tracking-widest font-bold">
+                    Select Garment Type
+                  </span>
+                  <div className="flex bg-neutral-100 p-1 rounded-xl border border-neutral-200 max-w-[200px]">
+                    {(["tshirt", "hoodie"] as const).map((type) => {
+                      const isActive = garmentType === type;
+                      return (
+                        <button
+                          key={type}
+                          onClick={() => setGarmentType(type)}
+                          className={`flex-1 py-1.5 text-[10px] font-bold uppercase rounded-lg cursor-pointer transition-all ${
+                            isActive ? "bg-white text-black shadow-sm" : "text-neutral-500 hover:text-neutral-800"
+                          }`}
+                        >
+                          {type === "tshirt" ? "T-Shirt" : "Hoodie"}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
                 {/* Print Placement Front vs Back */}
                 <div className="flex flex-col gap-2">
                   <span className="text-[10px] font-mono text-neutral-400 uppercase tracking-widest font-bold">
@@ -783,6 +824,58 @@ export default function DesignLabPage() {
         </section>
 
       </main>
+
+      {/* GARMENT SELECTION INITIAL MODAL POP-UP */}
+      {showGarmentModal && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/70 backdrop-blur-md animate-fadeIn px-4">
+          <div className="bg-white border border-neutral-200 shadow-2xl rounded-3xl p-6 sm:p-8 max-w-md w-full text-center flex flex-col gap-6 animate-scaleUp">
+            <div>
+              <h2 className="text-xl font-display font-black uppercase tracking-wider text-neutral-900">
+                Select Your Canvas
+              </h2>
+              <p className="text-xs text-neutral-400 font-mono mt-1 uppercase tracking-widest">
+                Choose base garment structure
+              </p>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              {/* T-Shirt option */}
+              <button
+                onClick={() => {
+                  setGarmentType("tshirt");
+                  setShowGarmentModal(false);
+                }}
+                className="flex flex-col items-center gap-3 p-4 rounded-2xl border-2 border-neutral-100 hover:border-blue-500 hover:bg-blue-50/10 transition-all group cursor-pointer"
+              >
+                <div className="h-16 w-16 bg-neutral-50 rounded-xl flex items-center justify-center group-hover:scale-105 transition-transform">
+                  <span className="text-3xl">👕</span>
+                </div>
+                <div>
+                  <span className="text-xs font-bold text-neutral-800 uppercase block">Streetwear Tee</span>
+                  <span className="text-[10px] text-neutral-400 block mt-0.5">Classic crewneck</span>
+                </div>
+              </button>
+
+              {/* Hoodie option */}
+              <button
+                onClick={() => {
+                  setGarmentType("hoodie");
+                  setShowGarmentModal(false);
+                }}
+                className="flex flex-col items-center gap-3 p-4 rounded-2xl border-2 border-neutral-100 hover:border-blue-500 hover:bg-blue-50/10 transition-all group cursor-pointer"
+              >
+                <div className="h-16 w-16 bg-neutral-50 rounded-xl flex items-center justify-center group-hover:scale-105 transition-transform">
+                  <span className="text-3xl">🧥</span>
+                </div>
+                <div>
+                  <span className="text-xs font-bold text-neutral-800 uppercase block">Premium Hoodie</span>
+                  <span className="text-[10px] text-neutral-400 block mt-0.5">Heavy fleece hoodie</span>
+                </div>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
     </div>
   );

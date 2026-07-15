@@ -17,6 +17,7 @@ export interface ViewerState {
   decalPosY: number;
   decalPosX: number;
   decalTarget: "front" | "back";
+  garmentType: "tshirt" | "hoodie";
   setColor: (c: string) => void;
   setDesign: (d: DesignType) => void;
   setView: (v: ViewType) => void;
@@ -29,6 +30,7 @@ export interface ViewerState {
   setDecalPosY: (y: number) => void;
   setDecalPosX: (x: number) => void;
   setDecalTarget: (t: "front" | "back") => void;
+  setGarmentType: (t: "tshirt" | "hoodie") => void;
   resetDecalPlacement: () => void;
 }
 
@@ -45,6 +47,7 @@ export const useViewerStore = create<ViewerState>((set) => ({
   decalPosY: 0.05,
   decalPosX: 0.00,
   decalTarget: "front",
+  garmentType: "tshirt",
   setColor: (color) => set({ color }),
   setDesign: (design) => set({ design }),
   setView: (view) => set({ view }),
@@ -57,5 +60,6 @@ export const useViewerStore = create<ViewerState>((set) => ({
   setDecalPosY: (decalPosY) => set({ decalPosY }),
   setDecalPosX: (decalPosX) => set({ decalPosX }),
   setDecalTarget: (decalTarget) => set({ decalTarget }),
+  setGarmentType: (garmentType) => set({ garmentType }),
   resetDecalPlacement: () => set({ decalScale: 0.35, decalPosY: 0.05, decalPosX: 0.00, decalTarget: "front" }),
 }));

@@ -8,6 +8,7 @@ import { useViewerStore } from "./useViewerStore";
 
 // Preload the GLB model
 useGLTF.preload("/models/tshirt.glb");
+useGLTF.preload("/models/premium_eco_hoodie.glb");
 
 // Helper function to generate design textures on a 512x512 canvas
 function generateDesignTexture(designId: string): THREE.CanvasTexture | null {
@@ -128,9 +129,21 @@ export default function TshirtModel({
   scale = 1.1,
   autoRotateSpeed = 1.0,
 }: TshirtModelProps) {
-  const { color, design, view, customTextureUrl, decalScale, decalPosY, decalPosX, decalTarget } = useViewerStore();
+  const {
+    color,
+    design,
+    view,
+    customTextureUrl,
+    decalScale,
+    decalPosY,
+    decalPosX,
+    decalTarget,
+    garmentType
+  } = useViewerStore();
   const meshRef = useRef<THREE.Mesh>(null);
   const controlsRef = useRef<any>(null);
+
+  const isHoodie = garmentType === "hoodie";
 
   // Access three.js canvas size
   const { size: canvasSize } = useThree();
@@ -147,7 +160,9 @@ export default function TshirtModel({
   }, [scale, canvasSize.width, canvasSize.height]);
 
   // Load the GLTF/GLB model
-  const { nodes, materials } = useGLTF("/models/tshirt.glb") as any;
+  const { nodes, materials, scene } = useGLTF(
+    isHoodie ? "/models/premium_eco_hoodie.glb" : "/models/tshirt.glb"
+  ) as any;
 
   // Locate the T-shirt mesh dynamically
   const meshKey = useMemo(() => {
@@ -157,14 +172,56 @@ export default function TshirtModel({
 
   // Apply fabric color to the material dynamically when color changes
   useEffect(() => {
-    if (shirtMeshNode && shirtMeshNode.material) {
-      shirtMeshNode.material.color.set(color);
-      // Remove ambient occlusion map to prevent the backside of the shirt from rendering black
-      shirtMeshNode.material.aoMap = null;
-      shirtMeshNode.material.roughness = 0.6;
-      shirtMeshNode.material.needsUpdate = true;
+    if (isHoodie) {
+      // Apply color to hoodie fabrics (Material 0 "FABRIC_3_2603")
+      Object.values(materials).forEach((mat: any) => {
+        if (mat) {
+          if (mat.name.includes("FABRIC") || mat.name.includes("Material.002")) {
+            mat.color.set(color);
+            mat.aoMap = null; // Clear ambient occlusion maps that cause black backside
+            mat.map = null; // Clear base color textures to allow solid flat colors
+            mat.roughness = 0.65;
+            mat.needsUpdate = true;
+          }
+        }
+      });
+    } else {
+      if (shirtMeshNode && shirtMeshNode.material) {
+        shirtMeshNode.material.color.set(color);
+        // Remove ambient occlusion map to prevent the backside of the shirt from rendering black
+        shirtMeshNode.material.aoMap = null;
+        shirtMeshNode.material.roughness = 0.6;
+        shirtMeshNode.material.needsUpdate = true;
+      }
     }
-  }, [color, shirtMeshNode]);
+  }, [color, shirtMeshNode, materials, isHoodie]);
+
+  const hoodieMeshRef = useRef<THREE.Mesh | null>(null);
+
+  useEffect(() => {
+    if (isHoodie && nodes.Object_4) {
+      hoodieMeshRef.current = nodes.Object_4;
+    } else {
+      hoodieMeshRef.current = null;
+    }
+  }, [isHoodie, nodes]);
+
+  // Center the hoodie model dynamically on load to prevent it from floating off-center
+  useEffect(() => {
+    if (isHoodie && scene) {
+      // Reset only position (NOT rotation/scale — those contain critical axis-swap matrices)
+      scene.position.set(0, 0, 0);
+      scene.updateMatrixWorld(true);
+
+      const box = new THREE.Box3().setFromObject(scene);
+      const center = new THREE.Vector3();
+      box.getCenter(center);
+
+      // Shift scene so its visual center sits at the origin
+      scene.position.set(-center.x, -center.y, -center.z);
+      scene.updateMatrixWorld(true);
+    }
+  }, [isHoodie, scene]);
 
   // Generate decal canvas texture (for non-logo designs)
   const [canvasTexture, setCanvasTexture] = useState<THREE.CanvasTexture | null>(null);
@@ -314,44 +371,82 @@ export default function TshirtModel({
 
   return (
     <>
-      <group position={[0, -0.55, 0]} scale={[responsiveScale, responsiveScale, responsiveScale]}>
-        <mesh
-          ref={meshRef}
-          geometry={shirtMeshNode.geometry}
-          material={shirtMeshNode.material}
-        >
-          {canvasTexture && (
+      {isHoodie ? (
+        <>
+          <group position={[0, -0.55, 0]} scale={[responsiveScale, responsiveScale, responsiveScale]}>
+            <primitive object={scene} />
+          </group>
+          {isHoodie && nodes.Object_4 && canvasTexture && (
             <Decal
-              mesh={meshRef as any}
-              position={[adjustedPosX, decalPosY, decalZ]}
+              mesh={hoodieMeshRef as any}
+              position={[isBack ? -decalPosX * 1000 : decalPosX * 1000, (decalPosY * 1000) + 60, isBack ? -1050 : -925]}
               rotation={[0, decalRotY, 0]}
-              scale={[decalScale, decalScale, decalScale]}
+              scale={[decalScale * 1000, decalScale * 1000, decalScale * 1000]}
               map={canvasTexture}
               polygonOffsetFactor={-1}
             />
           )}
-          {logoTexture && (
+          {isHoodie && nodes.Object_4 && logoTexture && (
             <Decal
-              mesh={meshRef as any}
-              position={[adjustedPosX, decalPosY, decalZ]}
+              mesh={hoodieMeshRef as any}
+              position={[isBack ? -decalPosX * 1000 : decalPosX * 1000, (decalPosY * 1000) + 60, isBack ? -1050 : -925]}
               rotation={[0, decalRotY, 0]}
-              scale={[decalScale, decalScale, decalScale]}
+              scale={[decalScale * 1000, decalScale * 1000, decalScale * 1000]}
               map={logoTexture}
               polygonOffsetFactor={-1}
             />
           )}
-          {customTexture && (
+          {isHoodie && nodes.Object_4 && customTexture && (
             <Decal
-              mesh={meshRef as any}
-              position={[adjustedPosX, decalPosY, decalZ]}
+              mesh={hoodieMeshRef as any}
+              position={[isBack ? -decalPosX * 1000 : decalPosX * 1000, (decalPosY * 1000) + 60, isBack ? -1050 : -925]}
               rotation={[0, decalRotY, 0]}
-              scale={[decalScale, decalScale, decalScale]}
+              scale={[decalScale * 1000, decalScale * 1000, decalScale * 1000]}
               map={customTexture}
               polygonOffsetFactor={-1}
             />
           )}
-        </mesh>
-      </group>
+        </>
+      ) : (
+        <group position={[0, -0.55, 0]} scale={[responsiveScale, responsiveScale, responsiveScale]}>
+          <mesh
+            ref={meshRef}
+            geometry={shirtMeshNode.geometry}
+            material={shirtMeshNode.material}
+          >
+            {canvasTexture && (
+              <Decal
+                mesh={meshRef as any}
+                position={[adjustedPosX, decalPosY, decalZ]}
+                rotation={[0, decalRotY, 0]}
+                scale={[decalScale, decalScale, decalScale]}
+                map={canvasTexture}
+                polygonOffsetFactor={-1}
+              />
+            )}
+            {logoTexture && (
+              <Decal
+                mesh={meshRef as any}
+                position={[adjustedPosX, decalPosY, decalZ]}
+                rotation={[0, decalRotY, 0]}
+                scale={[decalScale, decalScale, decalScale]}
+                map={logoTexture}
+                polygonOffsetFactor={-1}
+              />
+            )}
+            {customTexture && (
+              <Decal
+                mesh={meshRef as any}
+                position={[adjustedPosX, decalPosY, decalZ]}
+                rotation={[0, decalRotY, 0]}
+                scale={[decalScale, decalScale, decalScale]}
+                map={customTexture}
+                polygonOffsetFactor={-1}
+              />
+            )}
+          </mesh>
+        </group>
+      )}
 
       <OrbitControls
         ref={controlsRef}
