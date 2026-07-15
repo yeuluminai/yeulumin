@@ -143,7 +143,7 @@ export default function HomePage() {
           </button>
 
           {/* Bottom dot indicators */}
-          <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-1.5 z-20 bg-black/40 backdrop-blur-md px-2.5 py-1.5 rounded-full border border-white/10">
+          <div className="absolute bottom-16 md:bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-1.5 z-20 bg-black/40 backdrop-blur-md px-2.5 py-1.5 rounded-full border border-white/10">
             {HERO_IMAGES.map((_, i) => (
               <button
                 key={i}
@@ -155,6 +155,42 @@ export default function HomePage() {
               />
             ))}
           </div>
+
+          {/* Mobile "CUSTOMIZE YOURS" CTA Button */}
+          <Link
+            href="/customize"
+            className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 md:hidden flex items-center gap-2 pl-3 pr-1 py-1 rounded-full bg-white/95 backdrop-blur-md text-[#1a1a1a] font-bold text-[11px] uppercase tracking-[0.12em] shadow-md border border-neutral-200/60 transition-all active:scale-95"
+          >
+            {/* Left puzzle icon styled with the gradient background using a CSS mask */}
+            <div
+              className="h-5 w-5 flex-shrink-0"
+              style={{
+                background: "linear-gradient(135deg, #3BA6FC, #307AFB)",
+                WebkitMaskImage: "url('/gen_button/FLOATING BUTTON_no_circle_cropped.png')",
+                WebkitMaskSize: "contain",
+                WebkitMaskRepeat: "no-repeat",
+                WebkitMaskPosition: "center",
+                maskImage: "url('/gen_button/FLOATING BUTTON_no_circle_cropped.png')",
+                maskSize: "contain",
+                maskRepeat: "no-repeat",
+                maskPosition: "center",
+              }}
+            />
+
+            <span className="whitespace-nowrap leading-none pt-[1px]">CUSTOMIZE YOURS</span>
+
+            {/* Right blue circle icon */}
+            <span 
+              className="flex-shrink-0 h-7 w-7 rounded-full flex items-center justify-center overflow-hidden"
+              style={{ background: "linear-gradient(135deg, #3BA6FC, #307AFB)" }}
+            >
+              <img
+                src="/gen_button/FLOATING BUTTON_no_circle_cropped.png"
+                alt=""
+                className="h-4.5 w-4.5 object-contain"
+              />
+            </span>
+          </Link>
         </div>
       </section>
 
